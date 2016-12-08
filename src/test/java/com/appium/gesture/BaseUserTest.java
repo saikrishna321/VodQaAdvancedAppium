@@ -35,7 +35,7 @@ public class BaseUserTest {
                     "An appium server node is not started!");
         }
 
-        iosCaps();
+        androidCaps();
     }
 
     private static void androidCaps() {

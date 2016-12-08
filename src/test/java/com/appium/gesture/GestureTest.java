@@ -1,6 +1,8 @@
 package com.appium.gesture;
 
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.SwipeElementDirection;
 import io.appium.java_client.android.AndroidTouchAction;
 import io.appium.java_client.ios.IOSTouchAction;
@@ -37,6 +39,21 @@ public class GestureTest extends BaseUserTest{
         IOSTouchAction touchAction2 = new IOSTouchAction(driver);
         touchAction2.swipe(slider, SwipeElementDirection.LEFT, slider.getSize().getWidth() / 2,
                 0, 2000).perform();
+    }
+
+    @Test public void zoomTest() throws InterruptedException {
+        Thread.sleep(5000);
+        MobileElement e = driver.findElementById("photo");
+        new MultiTouchAction(driver).zoom(e).perform();
+        Thread.sleep(1000);
+    }
+
+    @Test public void zoomAndroidTest() throws InterruptedException {
+        Thread.sleep(5000);
+        MobileElement e = driver.findElement(MobileBy.AccessibilityId("photo"));
+        e.zoom();
+        e.pinch();
+        Thread.sleep(5000);
     }
 
 }
