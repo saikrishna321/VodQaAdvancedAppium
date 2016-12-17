@@ -7,14 +7,13 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.HowToUseLocators;
+import io.appium.java_client.pagefactory.iOSFindBy;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
-import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 import static io.appium.java_client.pagefactory.LocatorGroupStrategy.ALL_POSSIBLE;
 import static io.appium.java_client.pagefactory.LocatorGroupStrategy.CHAIN;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by ssekar on 12/10/16.
@@ -39,74 +37,102 @@ public class PageFactoryTest {
     protected static AppiumDriver<MobileElement> driver;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/nux_username\")")
+    @iOSFindBy(accessibility = "Username / Email")
     public MobileElement userName;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/nux_password\")")
+    @iOSFindBy(accessibility = "Password")
     public MobileElement password;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/nux_sign_in_button\")")
+    @iOSFindBy(accessibility = "Sign In")
     public MobileElement sigin;
 
-    @HowToUseLocators(androidAutomation = ALL_POSSIBLE)
+    @iOSFindBy(accessibility = "new-editor-modal-dismiss-button")
+    public MobileElement dismiss;
+
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/tab_icon\")")
+    @iOSFindBy(accessibility = "Testing")
     public MobileElement wordpressIcon;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/my_site_stats_text_view\")")
+    @iOSFindBy(accessibility = "Stats")
     public MobileElement stats;
 
-    @HowToUseLocators(androidAutomation = CHAIN)
+    @HowToUseLocators(androidAutomation = CHAIN, iOSAutomation = CHAIN)
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_insights_fragments_container\")")
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_inner_container\")")
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_label\")")
+    @iOSFindBy(accessibility = "2")
+    @iOSFindBy(accessibility = "VIEWS")
     public MobileElement views;
 
-    @HowToUseLocators(androidAutomation = ALL_POSSIBLE)
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/my_site_media_text_view\")")
+    @HowToUseLocators(androidAutomation = ALL_POSSIBLE, iOSAutomation = ALL_POSSIBLE)
+    @iOSFindBy(accessibility = "Comments")
+    @iOSFindBy(xpath = "//UIAStaticText[@text='Comments']")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/my_site_comments_text_view\")")
     @AndroidFindBy(className = "android.widget.TextView")
-    public MobileElement media;
+    public MobileElement Comments;
 
-    @AndroidFindBy(className = "android.widget.ImageButton")
-    public MobileElement imgButton;
+    @iOSFindBy(accessibility = "Comments Table")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/empty_view\")")
+    public MobileElement commentsDescription;
 
     @Test
     public void pageObjectAllPossibleTest() {
-        userName.sendKeys("vodqa2017");
-        password.sendKeys("password@123");
+        userName.sendKeys("vodqa@gmail.com");
+        password.sendKeys("Hello12345678");
         sigin.click();
+        if(driver.getSessionDetail("platformName").toString().equalsIgnoreCase("iOS")) {
+            waitForElement(dismiss);
+            dismiss.click();
+        }
+        waitForElement(wordpressIcon);
         wordpressIcon.click();
-        media.click();
-        assertEquals(media.getText(),"Media");
+        waitForElement(Comments);
+        Comments.click();
+        if(driver.getSessionDetail("platformName").toString().equalsIgnoreCase("iOS")) {
+            waitForElement(commentsDescription);
+            assertEquals(commentsDescription.getText(),"No comments yet");
+        } else if(driver.getSessionDetail("platformName").toString().equalsIgnoreCase("android")) {
+            waitForElement(Comments);
+            assertEquals(commentsDescription.getText(),"No comments");
+        }
     }
 
     @Test
     public void pageObjectChainingTest() {
-        userName.sendKeys("vodqa2017");
-        password.sendKeys("password@123");
+        userName.sendKeys("vodqa@gmail.com");
+        password.sendKeys("Hello12345678");
         sigin.click();
+        if(driver.getSessionDetail("platformName").toString().equalsIgnoreCase("iOS")) {
+            waitForElement(dismiss);
+            dismiss.click();
+        }
+        waitForElement(wordpressIcon);
         wordpressIcon.click();
+        waitForElement(stats);
         stats.click();
         assertEquals(views.getText(),"VIEWS");
-        System.out.println(views.getText());
     }
 
-    @Test public void toastMessageDisplayTest() throws InterruptedException {
-        userName.sendKeys("vodqa2017");
-        password.sendKeys("password@123");
-        sigin.click();
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        assertNotNull(wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.xpath("//*[@text='Error reloading your Gravatar']"))));
-    }
+//    @Test public void toastMessageDisplayTest() throws InterruptedException {
+//        userName.sendKeys("vodqa2017");
+//        password.sendKeys("password@123");
+//        sigin.click();
+//        WebDriverWait wait = new WebDriverWait(driver, 10);
+//        assertNotNull(wait.until(ExpectedConditions.presenceOfElementLocated(
+//            By.xpath("//*[@text='Error reloading your Gravatar']"))));
+//    }
 
     @Before
     public void beforeClass() throws Exception {
-                service = AppiumDriverLocalService.buildDefaultService();
-                service.start();
+        service = AppiumDriverLocalService.buildDefaultService();
+        service.start();
 
-                if (service == null || !service.isRunning()) {
-                    throw new AppiumServerHasNotBeenStartedLocallyException(
-                            "An appium server node is not started!");
-                }
+        if (service == null || !service.isRunning()) {
+            throw new RuntimeException("An appium server node is not started!");
+        }
 
         androidCaps();
         if (!populated) {
@@ -116,12 +142,17 @@ public class PageFactoryTest {
         populated = true;
     }
 
+    public void waitForElement(MobileElement mobileElement) {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.elementToBeClickable(mobileElement));
+    }
+
     private static void androidCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, ".ui.accounts.SignInActivity");
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/ssekar/workspace/VodQaAdvancedAppium/org.wordpress.android.apk");
-        driver = new AndroidDriver<MobileElement>(service.getUrl(), capabilities);
+        capabilities.setCapability(MobileCapabilityType.APP, "/Users/ssekar/workspace/VodQaAdvancedAppium/wordpress_old.apk");
+        driver = new AndroidDriver<>(service.getUrl(), capabilities);
     }
 
     private static void iosCaps() throws MalformedURLException {
