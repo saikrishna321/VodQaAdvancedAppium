@@ -1,59 +1,56 @@
 package com.appium.gesture;
 
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.MultiTouchAction;
-import io.appium.java_client.SwipeElementDirection;
-import io.appium.java_client.android.AndroidTouchAction;
-import io.appium.java_client.ios.IOSTouchAction;
+import io.appium.java_client.*;
+
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
+import org.openqa.selenium.Dimension;
 
 /**
  * Created by saikrisv on 07/12/16.
  */
-public class GestureTest extends BaseUserTest{
-
+public class GestureTest extends BaseUserTest {
 
     @Test public void horizontalSwipingTest() throws Exception {
-        Thread.sleep(5000);
         MobileElement slider = driver.findElementByAccessibilityId("slider");
+        Dimension size = slider.getSize();
 
-        AndroidTouchAction touchAction = new AndroidTouchAction(driver);
-        touchAction.swipe(slider, SwipeElementDirection.RIGHT, 0 ,
-                slider.getSize().getWidth() / 2, 2000).perform();
-
-        AndroidTouchAction touchAction2 = new AndroidTouchAction(driver);
-        touchAction2.swipe(slider, SwipeElementDirection.LEFT, slider.getSize().getWidth() / 2,
-                0, 2000).perform();
+        TouchAction swipe = new TouchAction(driver).press(slider, 0, size.height / 2).waitAction(2000)
+            .moveTo(slider, size.width / 2, size.height / 2).release();
+        swipe.perform();
     }
 
 
-    @Test public void iosTest() throws InterruptedException {
-        Thread.sleep(5000);
-        MobileElement slider = driver.findElementByAccessibilityId("slider");
+    @Test
+    public void veriticalSwipe() {
+        MobileElement slider = driver.findElementByAccessibilityId("listview");
+        Dimension size = slider.getSize();
 
-        IOSTouchAction touchAction = new IOSTouchAction(driver);
-        touchAction.swipe(slider, SwipeElementDirection.RIGHT, 0 ,
-                slider.getSize().getWidth() / 2, 2000).perform();
+        TouchAction swipe = new TouchAction(driver).press(slider, size.width / 2, size.height - 20)
+            .waitAction(2000).moveTo(slider,size.width / 2, size.height / 2 + 20).release();
+        swipe.perform();
 
-        IOSTouchAction touchAction2 = new IOSTouchAction(driver);
-        touchAction2.swipe(slider, SwipeElementDirection.LEFT, slider.getSize().getWidth() / 2,
-                0, 2000).perform();
+
+    }
+    @Test public void dragAndDrop() throws InterruptedException {
+        MobileElement drag = driver.findElementByAccessibilityId("dragMe");
+        new TouchAction(driver).press(drag).waitAction(3000)
+            .moveTo(driver.findElementByAccessibilityId("dropzone")).release().perform();
     }
 
-    @Test public void zoomTest() throws InterruptedException {
-        Thread.sleep(5000);
-        MobileElement e = driver.findElementById("photo");
-        new MultiTouchAction(driver).zoom(e).perform();
-        Thread.sleep(1000);
+    @Test public void zoom() throws InterruptedException {
+        MobileElement zoom = driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAElement[4]/UIAScrollView[1]/UIAImage[2]");
+        Dimension size = zoom.getSize();
+        System.out.println("****SIZE" + size);
+        TouchAction touchAction1 =
+            new TouchAction(driver).press(size.getWidth() / 2, size.getHeight() / 2)
+                .waitAction(3000).moveTo(size.getWidth() / 2 + 5, size.getHeight() / 2 + 5)
+                .release();
+        TouchAction touchAction2 =
+            new TouchAction(driver).press(size.getWidth() / 2 - 5, size.getHeight() / 2 - 5 )
+                .waitAction(3000).moveTo(size.getWidth() , size.getHeight()  )
+                .release();
+        new MultiTouchAction(driver).add(touchAction1).add(touchAction2).perform();
     }
-
-    @Test public void zoomAndroidTest() throws InterruptedException {
-        Thread.sleep(5000);
-        MobileElement e = driver.findElement(MobileBy.AccessibilityId("photo"));
-        e.zoom();
-        e.pinch();
-        Thread.sleep(5000);
-    }
-
 }

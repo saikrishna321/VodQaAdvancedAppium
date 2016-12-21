@@ -12,7 +12,7 @@
         <dependency>
             <groupId>com.github.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>ffc36db7bb</version>
+            <version>95fbdf9a83</version>
         </dependency>
     </dependencies>
 
