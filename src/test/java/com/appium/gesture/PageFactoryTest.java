@@ -61,16 +61,16 @@ public class PageFactoryTest {
 
     @HowToUseLocators(androidAutomation = CHAIN, iOSAutomation = CHAIN)
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_insights_fragments_container\")")
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_inner_container\")")
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_label\")")
-    @iOSFindBy(accessibility = "2")
+    //@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_inner_container\")")
+   // @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_label\")")
+    //@iOSFindBy(accessibility = "2")
     @iOSFindBy(accessibility = "VIEWS")
     public MobileElement views;
 
     @HowToUseLocators(androidAutomation = ALL_POSSIBLE, iOSAutomation = ALL_POSSIBLE)
-    @iOSFindBy(accessibility = "Comments")
+    //@iOSFindBy(accessibility = "Comments")
     @iOSFindBy(xpath = "//UIAStaticText[@text='Comments']")
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/my_site_comments_text_view\")")
+    //@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/my_site_comments_text_view\")")
     @AndroidFindBy(className = "android.widget.TextView")
     public MobileElement Comments;
 
