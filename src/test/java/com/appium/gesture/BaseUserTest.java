@@ -4,14 +4,18 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,7 +41,6 @@ public class BaseUserTest {
                     "An appium server node is not started!");
         }
 
-        iosCaps();
     }
 
     private static void androidCaps() {
@@ -52,22 +55,33 @@ public class BaseUserTest {
     private static void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.3");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.2");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 7");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         //sometimes environment has performance problems
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/VodQAReactNative/ios/build/Build/Products/Debug-iphonesimulator/VodQAReactNative.app");
+        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/Documents/VodQAReactNative/ios/build/Build/Products/Debug-iphonesimulator/VodQAReactNative.app");
         driver = new IOSDriver<MobileElement>(service.getUrl(), capabilities);
     }
 
+
+    @BeforeMethod
+    public void launchApp() throws MalformedURLException {
+      iosCaps();
+    }
+
+
+    @AfterMethod
+    public void quitApp(){
+        if (driver != null) {
+            driver.quit();
+        }
+    }
     /**
      * finishing.
      */
     @AfterClass
     public static void afterClass() {
-        if (driver != null) {
-            driver.quit();
-        }
         if (service != null) {
             service.stop();
         }

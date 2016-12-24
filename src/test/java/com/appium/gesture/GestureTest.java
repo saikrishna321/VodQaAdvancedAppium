@@ -4,18 +4,21 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
-import org.junit.Test;
+
+import io.appium.java_client.ios.IOSTouchAction;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 /**
  * Created by saikrisv on 07/12/16.
  */
 public class GestureTest extends BaseUserTest {
 
-    @Test public void horizontalSwipingTest() throws Exception {
+    @Test
+    public void horizontalSwipingTest() throws Exception {
         login();
         driver.findElementByAccessibilityId("slider1").click();
         MobileElement slider = driver.findElementByAccessibilityId("slider");
@@ -61,8 +64,9 @@ public class GestureTest extends BaseUserTest {
         driver.findElementByAccessibilityId("longPress").click();
         MobileElement longpress = (MobileElement) new WebDriverWait(driver, 30).
                 until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("longpress")));
-        new TouchAction(driver).longPress(longpress).release().perform();
+        new TouchAction(driver).longPress(longpress,3000).perform();
     }
+
 
 
 
@@ -73,9 +77,7 @@ public class GestureTest extends BaseUserTest {
         driver.findElementByAccessibilityId("doubleTap").click();
         MobileElement doubleTap = (MobileElement) new WebDriverWait(driver, 30).
                 until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("doubleTapMe")));
-        new MultiTouchAction(driver).add(new TouchAction(driver).tap(doubleTap).release()).
-                add(new TouchAction(driver).tap(doubleTap).release()).perform();
-
+        new IOSTouchAction(driver).doubleTap(doubleTap).perform();
         Thread.sleep(5000);
     }
 
