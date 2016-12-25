@@ -47,7 +47,7 @@ public class BaseUserTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/IdeaProjects/VodQA2017Appium/app-debug-unaligned.apk");
+        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/Documents/VodQAReactNative/android/app/build/outputs/apk/app-debug-unaligned.apk");
         //capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/java_client_pr/java-client/src/test/java/io/appium/java_client/ApiDemos-debug.apk");
         driver = new AndroidDriver<MobileElement>(service.getUrl(), capabilities);
     }
@@ -67,7 +67,7 @@ public class BaseUserTest {
 
     @BeforeMethod
     public void launchApp() throws MalformedURLException {
-      iosCaps();
+      androidCaps();
     }
 
 

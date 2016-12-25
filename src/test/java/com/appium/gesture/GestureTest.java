@@ -94,7 +94,7 @@ public class GestureTest extends BaseUserTest {
 
 
      public void zoom() throws InterruptedException {
-        MobileElement zoom = driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAElement[4]/UIAScrollView[1]/UIAImage[2]");
+        MobileElement zoom = driver.findElementByClassName("android.widget.ImageView");;
         Dimension size = zoom.getSize();
         System.out.println("****SIZE" + size);
         TouchAction touchAction1 =

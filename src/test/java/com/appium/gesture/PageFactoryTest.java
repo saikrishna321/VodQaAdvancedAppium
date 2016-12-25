@@ -9,6 +9,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.HowToUseLocators;
 import io.appium.java_client.pagefactory.iOSFindBy;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
@@ -61,16 +62,16 @@ public class PageFactoryTest {
 
     @HowToUseLocators(androidAutomation = CHAIN, iOSAutomation = CHAIN)
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_insights_fragments_container\")")
-    //@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_inner_container\")")
-   // @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_label\")")
-    //@iOSFindBy(accessibility = "2")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_inner_container\")")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_label\")")
+    @iOSFindBy(accessibility = "2")
     @iOSFindBy(accessibility = "VIEWS")
     public MobileElement views;
 
     @HowToUseLocators(androidAutomation = ALL_POSSIBLE, iOSAutomation = ALL_POSSIBLE)
-    //@iOSFindBy(accessibility = "Comments")
+    @iOSFindBy(accessibility = "Comments")
     @iOSFindBy(xpath = "//UIAStaticText[@text='Comments']")
-    //@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/my_site_comments_text_view\")")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/my_site_comments_text_view\")")
     @AndroidFindBy(className = "android.widget.TextView")
     public MobileElement Comments;
 
@@ -134,7 +135,7 @@ public class PageFactoryTest {
             throw new RuntimeException("An appium server node is not started!");
         }
 
-        androidCaps();
+        iosCaps();
         if (!populated) {
             PageFactory.initElements(new AppiumFieldDecorator(driver, 5, TimeUnit.SECONDS),this);
         }
@@ -151,18 +152,19 @@ public class PageFactoryTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, ".ui.accounts.SignInActivity");
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/ssekar/workspace/VodQaAdvancedAppium/wordpress_old.apk");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/wordpress_old.apk");
         driver = new AndroidDriver<>(service.getUrl(), capabilities);
     }
 
     private static void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.3");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.2");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 7");
         //sometimes environment has performance problems
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/ssekar/workspace/VodQaAdvancedAppium/WordPress.app");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/WordPress.app");
         driver = new IOSDriver<MobileElement>(service.getUrl(), capabilities);
         System.out.println("test");
     }
