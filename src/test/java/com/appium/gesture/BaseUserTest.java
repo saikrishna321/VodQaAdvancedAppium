@@ -10,7 +10,6 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
-
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -18,7 +17,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Created by saikrisv on 07/12/16.
@@ -47,6 +45,7 @@ public class BaseUserTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 700000);
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,"UIAutomator2");
         capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/Documents/VodQAReactNative/android/app/build/outputs/apk/app-debug-unaligned.apk");
         //capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/java_client_pr/java-client/src/test/java/io/appium/java_client/ApiDemos-debug.apk");
         driver = new AndroidDriver<MobileElement>(service.getUrl(), capabilities);

@@ -4,10 +4,7 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
-
-import io.appium.java_client.ios.IOSTouchAction;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
@@ -77,7 +74,7 @@ public class GestureTest extends BaseUserTest {
         driver.findElementByAccessibilityId("doubleTap").click();
         MobileElement doubleTap = (MobileElement) new WebDriverWait(driver, 30).
                 until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("doubleTapMe")));
-        new IOSTouchAction(driver).doubleTap(doubleTap).perform();
+        //new IOSTouchAction(driver).doubleTap(doubleTap).perform();
         Thread.sleep(5000);
     }
 

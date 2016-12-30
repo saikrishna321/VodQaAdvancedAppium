@@ -1,3 +1,4 @@
+/*
 package com.appium.gesture;
 
 import io.appium.java_client.AppiumDriver;
@@ -26,9 +27,10 @@ import static io.appium.java_client.pagefactory.LocatorGroupStrategy.ALL_POSSIBL
 import static io.appium.java_client.pagefactory.LocatorGroupStrategy.CHAIN;
 import static org.junit.Assert.assertEquals;
 
-/**
+*
  * Created by ssekar on 12/10/16.
- */
+
+
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PageFactoryTest {
@@ -61,7 +63,7 @@ public class PageFactoryTest {
     public MobileElement stats;
 
     @HowToUseLocators(androidAutomation = CHAIN, iOSAutomation = CHAIN)
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_insights_fragments_container\")")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_module_result_container\")")
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_inner_container\")")
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_label\")")
     @iOSFindBy(accessibility = "2")
@@ -123,7 +125,8 @@ public class PageFactoryTest {
 //        sigin.click();
 //        WebDriverWait wait = new WebDriverWait(driver, 10);
 //        assertNotNull(wait.until(ExpectedConditions.presenceOfElementLocated(
-//            By.xpath("//*[@text='Error reloading your Gravatar']"))));
+//            By.xpath("/
+[@text='Error reloading your Gravatar']"))));
 //    }
 
     @Before
@@ -179,3 +182,4 @@ public class PageFactoryTest {
         }
     }
 }
+*/

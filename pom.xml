@@ -22,9 +22,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.appium</groupId>
+            <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>95fbdf9a83</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
