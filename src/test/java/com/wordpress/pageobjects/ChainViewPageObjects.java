@@ -11,8 +11,7 @@ import static io.appium.java_client.pagefactory.LocatorGroupStrategy.CHAIN;
  */
 public class StatsPageObjects {
 
-    @HowToUseLocators(androidAutomation = CHAIN)
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_latest_post_tabs\")")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_insights_latest_post_summary_container\")")
     @AndroidFindBy(uiAutomator = ("new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_inner_container\").enabled(true).instance(2)"))
     @AndroidFindBy(id = "stats_visitors_and_views_tab_value")
     public MobileElement views;
