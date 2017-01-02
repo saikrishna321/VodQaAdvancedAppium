@@ -34,4 +34,13 @@ public class ChainedTest extends BaseUserTest {
                         navigateToChainedView().isSecondContainerExists();
         Assert.assertTrue(secondComment);
     }
+
+    @Test
+    public void locatorUsageTest() {
+        loginPage = new LoginPage(driver);
+        String text = loginPage
+            .enterUserNamePassword("admin", "admin").signIn().
+                navigateToChainedView().getContainerText();
+        Assert.assertNotNull(text);
+    }
 }

@@ -6,7 +6,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
-
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,8 +26,14 @@ public class ChainViewPage extends Helpers {
         return waitForElement(chainViewPageObjects.views).getText();
     }
 
-    public boolean isSecondContainerExists(){
+    public boolean isSecondContainerExists() {
+        waitForElement(chainViewPageObjects.allPossibleView);
         return chainViewPageObjects.allPossibleView.isDisplayed();
+    }
+
+    public String getContainerText() {
+        waitForElement(chainViewPageObjects.allPossibleView);
+        return chainViewPageObjects.locatorUsage.getText();
     }
 
 
