@@ -4,6 +4,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.HowToUseLocators;
 
+import static io.appium.java_client.pagefactory.LocatorGroupStrategy.ALL_POSSIBLE;
 import static io.appium.java_client.pagefactory.LocatorGroupStrategy.CHAIN;
 
 /**
@@ -16,7 +17,15 @@ public class ChainViewPageObjects {
     @AndroidFindBy(accessibility = "textView")
     public MobileElement views;
 
+    @HowToUseLocators(androidAutomation = ALL_POSSIBLE)
+    @AndroidFindBy(className = "fakeID1")
+    @AndroidFindBy(accessibility = "fakeID2")
+    @AndroidFindBy(accessibility = "container2")
+    public MobileElement allPossibleView;
+
     }
+
+
 
 /**
  * ((AndroidDriver) driver).

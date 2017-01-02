@@ -27,5 +27,9 @@ public class ChainViewPage extends Helpers {
         return waitForElement(chainViewPageObjects.views).getText();
     }
 
+    public boolean isSecondContainerExists(){
+        return chainViewPageObjects.allPossibleView.isDisplayed();
+    }
+
 
 }

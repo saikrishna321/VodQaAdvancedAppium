@@ -25,4 +25,13 @@ public class ChainedTest extends BaseUserTest {
         System.out.println(secondComment);
         Assert.assertEquals("Hello World, I'm View two",secondComment.trim());
     }
+
+    @Test
+    public void allPossibleTest(){
+        loginPage = new LoginPage(driver);
+        boolean secondComment = loginPage
+                .enterUserNamePassword("admin", "admin").signIn().
+                        navigateToChainedView().isSecondContainerExists();
+        Assert.assertTrue(secondComment);
+    }
 }
