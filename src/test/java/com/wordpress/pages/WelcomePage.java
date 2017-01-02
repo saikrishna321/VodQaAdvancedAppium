@@ -31,7 +31,7 @@ public class WelcomePage extends Helpers {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        welcomePageObjects.chainedView.click();
+        //welcomePageObjects.chainedView.click();
         welcomePageObjects.chainedView.click();
         return new ChainViewPage(driver);
     }

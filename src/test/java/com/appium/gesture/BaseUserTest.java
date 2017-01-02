@@ -54,19 +54,19 @@ public class BaseUserTest {
     private static void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.2");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 7");
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.3");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
+        //capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         //sometimes environment has performance problems
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/Documents/VodQAReactNative/ios/build/Build/Products/Debug-iphonesimulator/VodQAReactNative.app");
+        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/VodQAReactNative/ios/build/Build/Products/Debug-iphonesimulator/VodQAReactNative.app");
         driver = new IOSDriver<MobileElement>(service.getUrl(), capabilities);
     }
 
 
     @BeforeMethod
     public void launchApp() throws MalformedURLException {
-      androidCaps();
+      iosCaps();
     }
 
 
