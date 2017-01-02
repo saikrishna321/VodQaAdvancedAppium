@@ -19,19 +19,20 @@ public class LoginPage extends Helpers{
     public LoginPage(AppiumDriver<MobileElement> driver) {
         super(driver);
         loginPageObjects = new LoginPageObjects();
-        PageFactory.initElements(new AppiumFieldDecorator(driver, 10,
-                TimeUnit.MILLISECONDS), loginPageObjects);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), loginPageObjects);
     }
 
-    public LoginPage navigateToLoginScreen() {
-        waitForElement(loginPageObjects.selfHostedSite).click();
+    public LoginPage enterUserNamePassword(String username, String password) {
+        waitForElement(loginPageObjects.signButton);
+        clearField();
+        loginPageObjects.userName.sendKeys(username);
+        loginPageObjects.passWord.sendKeys(password);
         return this;
     }
 
-    public LoginPage enterUserNamePassword(String username, String password, String siteUrl) {
-        loginPageObjects.userName.sendKeys(username);
-        loginPageObjects.passWord.sendKeys(password);
-        loginPageObjects.siteUrl.sendKeys(siteUrl);
+    public LoginPage clearField() {
+        loginPageObjects.userName.clear();
+        loginPageObjects.passWord.clear();
         return this;
     }
 

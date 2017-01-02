@@ -9,11 +9,11 @@ import static io.appium.java_client.pagefactory.LocatorGroupStrategy.CHAIN;
 /**
  * Created by saikrisv on 12/29/16.
  */
-public class StatsPageObjects {
+public class ChainViewPageObjects {
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"org.wordpress.android:id/stats_insights_latest_post_summary_container\")")
-    @AndroidFindBy(uiAutomator = ("new UiSelector().resourceId(\"org.wordpress.android:id/stats_visitors_and_views_tab_inner_container\").enabled(true).instance(2)"))
-    @AndroidFindBy(id = "stats_visitors_and_views_tab_value")
+    @AndroidFindBy(className = "android.widget.ScrollView")
+    @AndroidFindBy(accessibility = "container2")
+    @AndroidFindBy(accessibility = "textView")
     public MobileElement views;
 
     }

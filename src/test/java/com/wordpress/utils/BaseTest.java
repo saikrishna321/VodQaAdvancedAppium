@@ -14,6 +14,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by saikrisv on 12/29/16.
@@ -48,9 +49,10 @@ public class BaseTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 900000);
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,AutomationName.ANDROID_UIAUTOMATOR2);
         capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, ".ui.accounts.SignInActivity");
         capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/wordpress.apk");
-        driver = new AndroidDriver<>(service.getUrl(), capabilities);
+        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
 
     private  void iosCaps() throws MalformedURLException {

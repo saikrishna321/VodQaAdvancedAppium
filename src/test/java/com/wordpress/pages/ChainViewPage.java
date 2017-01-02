@@ -1,6 +1,6 @@
 package com.wordpress.pages;
 
-import com.wordpress.pageobjects.StatsPageObjects;
+import com.wordpress.pageobjects.ChainViewPageObjects;
 import com.wordpress.utils.Helpers;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -12,19 +12,19 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by saikrisv on 12/29/16.
  */
-public class StatsPage extends Helpers {
+public class ChainViewPage extends Helpers {
 
-    private StatsPageObjects statsPageObjects;
+    private ChainViewPageObjects chainViewPageObjects;
 
-    StatsPage(AppiumDriver<MobileElement> driver) {
+    ChainViewPage(AppiumDriver<MobileElement> driver) {
         super(driver);
-        statsPageObjects = new StatsPageObjects();
+        chainViewPageObjects = new ChainViewPageObjects();
         PageFactory.initElements(new AppiumFieldDecorator(driver,
-                15, TimeUnit.MILLISECONDS), statsPageObjects);
+                15, TimeUnit.MILLISECONDS), chainViewPageObjects);
     }
 
-    public String getTotalComments() {
-        return waitForElement(statsPageObjects.views).getText();
+    public String getSecondComment() {
+        return waitForElement(chainViewPageObjects.views).getText();
     }
 
 

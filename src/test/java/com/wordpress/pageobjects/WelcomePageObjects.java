@@ -8,12 +8,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
  */
 public class WelcomePageObjects {
 
-    @AndroidFindBy(id = "org.wordpress.android:id/my_site_subtitle_label")
-    public MobileElement loggedInName;
+    @AndroidFindBy(uiAutomator = "new UiSelector().description(\"chainedView\")")
+    public MobileElement chainedView;
 
-    @AndroidFindBy(id = "org.wordpress.android:id/my_site_stats_text_view")
-    public MobileElement stats;
-
-    @AndroidFindBy(accessibility = "Notifications")
-    public MobileElement notifications;
 }

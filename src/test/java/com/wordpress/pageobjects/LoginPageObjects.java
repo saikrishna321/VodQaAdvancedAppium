@@ -2,25 +2,23 @@ package com.wordpress.pageobjects;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.openqa.selenium.support.CacheLookup;
+
 
 /**
  * Created by saikrisv on 12/29/16.
  */
 public class LoginPageObjects {
 
-    @AndroidFindBy(id = "org.wordpress.android:id/nux_add_selfhosted_button")
-    public MobileElement selfHostedSite;
-
-    @AndroidFindBy(id = "org.wordpress.android:id/nux_username")
+    @CacheLookup
+    @AndroidFindBy(accessibility = "username")
     public MobileElement userName;
 
-    @AndroidFindBy(id = "org.wordpress.android:id/nux_password")
+    @CacheLookup
+    @AndroidFindBy(accessibility = "password")
     public MobileElement passWord;
 
-    @AndroidFindBy(id = "org.wordpress.android:id/nux_url")
-    public MobileElement siteUrl;
-
-    @AndroidFindBy(id = "org.wordpress.android:id/nux_sign_in_button")
+    @AndroidFindBy(accessibility = "login")
     public MobileElement signButton;
 
 }
