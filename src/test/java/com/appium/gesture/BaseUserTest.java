@@ -46,7 +46,7 @@ public class BaseUserTest {
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 700000);
         //capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,"UIAutomator2");
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/VodQAReactNative/android/app/build/outputs/apk/app-debug-unaligned.apk");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQAReactNative.apk");
         //capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/java_client_pr/java-client/src/test/java/io/appium/java_client/ApiDemos-debug.apk");
         driver = new AndroidDriver<MobileElement>(service.getUrl(), capabilities);
     }
@@ -54,22 +54,22 @@ public class BaseUserTest {
     private static void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.3");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.1.1");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
-        //capabilities.setCapability(MobileCapabilityType.UDID,"***");
+        capabilities.setCapability(MobileCapabilityType.UDID,"c10ee616e7268008abf1773758ef010848a6b0d4");
         //capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         //capabilities.setCapability("usePrebuiltWDA",true);
 
         //sometimes environment has performance problems
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQAReactNative.zip");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQAReactNative.ipa");
         driver = new IOSDriver<MobileElement>(service.getUrl(), capabilities);
     }
 
 
     @BeforeMethod
     public void launchApp() throws MalformedURLException {
-      iosCaps();
+      androidCaps();
     }
 
 
