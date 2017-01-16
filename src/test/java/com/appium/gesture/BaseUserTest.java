@@ -54,12 +54,15 @@ public class BaseUserTest {
     private static void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.3");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.1.1");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
-        //capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
+        capabilities.setCapability(MobileCapabilityType.UDID,"c10ee616e7268008abf1773758ef010848a6b0d4");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
+        capabilities.setCapability("usePrebuiltWDA",true);
+
         //sometimes environment has performance problems
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/VodQAReactNative/ios/build/Build/Products/Debug-iphonesimulator/VodQAReactNative.app");
+        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/VodQaAdvancedAppium/VodQAReactNative.ipa");
         driver = new IOSDriver<MobileElement>(service.getUrl(), capabilities);
     }
 
