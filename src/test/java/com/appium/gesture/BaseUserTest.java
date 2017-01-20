@@ -1,6 +1,7 @@
 package com.appium.gesture;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -11,12 +12,15 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by saikrisv on 07/12/16.
@@ -38,7 +42,6 @@ public class BaseUserTest {
             throw new AppiumServerHasNotBeenStartedLocallyException(
                     "An appium server node is not started!");
         }
-
     }
 
     private static void androidCaps() {
@@ -54,22 +57,21 @@ public class BaseUserTest {
     private static void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.1.1");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.2");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
-        capabilities.setCapability(MobileCapabilityType.UDID,"c10ee616e7268008abf1773758ef010848a6b0d4");
-        //capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
+        //capabilities.setCapability(MobileCapabilityType.UDID,"c10ee616e7268008abf1773758ef010848a6b0d4");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         capabilities.setCapability("--log-timestamp",true);
-
         //sometimes environment has performance problems
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQAReactNative.ipa");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQAReactNative.zip");
         driver = new IOSDriver<MobileElement>(service.getUrl(), capabilities);
     }
 
 
     @BeforeMethod
     public void launchApp() throws MalformedURLException {
-      androidCaps();
+      iosCaps();
     }
 
 
@@ -87,5 +89,10 @@ public class BaseUserTest {
         if (service != null) {
             service.stop();
         }
+    }
+
+    private void login() {
+        new WebDriverWait(driver,30).until(ExpectedConditions.
+                elementToBeClickable(MobileBy.AccessibilityId("login"))).click();
     }
 }
