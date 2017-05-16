@@ -13,8 +13,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -22,15 +22,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>5.0.0-BETA1</version>
+            <groupId>com.github.saikrishna321</groupId>
+            <artifactId>AppiumTestDistribution</artifactId>
+            <version>6.0.2-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>RELEASE</version>
-        </dependency>
+
     </dependencies>
 
     <repositories>
