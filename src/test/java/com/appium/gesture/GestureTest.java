@@ -5,10 +5,15 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSTouchAction;
+import io.appium.java_client.touch.LongPressOptions;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.ElementOption;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 /**
  * Created by saikrisv on 07/12/16.
@@ -22,13 +27,13 @@ public class GestureTest extends BaseUserTest {
         MobileElement slider = driver.findElementByAccessibilityId("slider");
         Dimension size = slider.getSize();
 
-        TouchAction swipe = new TouchAction(driver).press(slider, 0, size.height / 2).waitAction(2000)
-            .moveTo(slider, size.width / 2, size.height / 2).release();
+        TouchAction swipe = new TouchAction(driver).press(slider, 0, size.height / 2).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3)))
+                .moveTo(slider, size.width / 2, size.height / 2).release();
         swipe.perform();
     }
 
     private void login() {
-        new WebDriverWait(driver,30).until(ExpectedConditions.
+        new WebDriverWait(driver, 30).until(ExpectedConditions.
                 elementToBeClickable(MobileBy.AccessibilityId("login"))).click();
     }
 
@@ -51,7 +56,7 @@ public class GestureTest extends BaseUserTest {
         driver.findElementByAccessibilityId("dragAndDrop").click();
         MobileElement dragMe = (MobileElement) new WebDriverWait(driver, 30).until(ExpectedConditions
                 .elementToBeClickable(MobileBy.AccessibilityId("dragMe")));
-        new TouchAction(driver).press(dragMe).waitAction(3000)
+        new TouchAction(driver).press(dragMe).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3)))
                 .moveTo(driver.findElementByAccessibilityId("dropzone")).release().perform();
     }
 
@@ -62,10 +67,12 @@ public class GestureTest extends BaseUserTest {
         driver.findElementByAccessibilityId("longPress").click();
         MobileElement longpress = (MobileElement) new WebDriverWait(driver, 30).
                 until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("longpress")));
-        new TouchAction(driver).longPress(longpress,3000).perform();
+
+        LongPressOptions longPressOptions = new LongPressOptions();
+        longPressOptions.withDuration(Duration.ofSeconds(3)).withElement(ElementOption.element(longpress));
+
+        new TouchAction(driver).longPress(longPressOptions).perform();
     }
-
-
 
 
     @Test //Will work only on XCUI mode as doubleTap is not supported by IOS/Android
@@ -73,9 +80,10 @@ public class GestureTest extends BaseUserTest {
         login();
         Thread.sleep(5000);
         driver.findElementByAccessibilityId("doubleTap").click();
-        MobileElement doubleTap = (MobileElement) new WebDriverWait(driver, 30).
+        MobileElement element = (MobileElement) new WebDriverWait(driver, 30).
                 until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("doubleTapMe")));
-        new IOSTouchAction(driver).doubleTap(doubleTap).perform();
+        Thread.sleep(1000);
+        new IOSTouchAction(driver).doubleTap(ElementOption.element(element)).perform();
         Thread.sleep(5000);
     }
 
@@ -86,23 +94,24 @@ public class GestureTest extends BaseUserTest {
         Dimension size = slider.getSize();
 
         TouchAction swipe = new TouchAction(driver).press(slider, size.width / 2, size.height - 20)
-            .waitAction(2000).moveTo(slider,size.width / 2, size.height / 2 + 50).release();
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2))).moveTo(slider, size.width / 2, size.height / 2 + 50).release();
         swipe.perform();
     }
 
 
-     public void zoom() throws InterruptedException {
-        MobileElement zoom = driver.findElementByClassName("android.widget.ImageView");;
+    public void zoom() throws InterruptedException {
+        MobileElement zoom = driver.findElementByClassName("android.widget.ImageView");
+        ;
         Dimension size = zoom.getSize();
         System.out.println("****SIZE" + size);
         TouchAction touchAction1 =
-            new TouchAction(driver).press(size.getWidth() / 2, size.getHeight() / 2)
-                .waitAction(3000).moveTo(size.getWidth() / 2 + 5, size.getHeight() / 2 + 5)
-                .release();
+                new TouchAction(driver).press(size.getWidth() / 2, size.getHeight() / 2)
+                        .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3))).moveTo(size.getWidth() / 2 + 5, size.getHeight() / 2 + 5)
+                        .release();
         TouchAction touchAction2 =
-            new TouchAction(driver).press(size.getWidth() / 2 - 5, size.getHeight() / 2 - 5 )
-                .waitAction(3000).moveTo(size.getWidth() , size.getHeight()  )
-                .release();
+                new TouchAction(driver).press(size.getWidth() / 2 - 5, size.getHeight() / 2 - 5)
+                        .waitAction().moveTo(size.getWidth(), size.getHeight())
+                        .release();
         new MultiTouchAction(driver).add(touchAction1).add(touchAction2).perform();
     }
 }
