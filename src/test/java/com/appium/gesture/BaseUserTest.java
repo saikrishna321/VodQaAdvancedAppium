@@ -71,7 +71,7 @@ public class BaseUserTest {
 
     @BeforeMethod
     public void launchApp() throws MalformedURLException {
-      iosCaps();
+      androidCaps();
     }
 
 

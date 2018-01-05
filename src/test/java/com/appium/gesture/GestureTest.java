@@ -27,8 +27,9 @@ public class GestureTest extends BaseUserTest {
         MobileElement slider = driver.findElementByAccessibilityId("slider");
         Dimension size = slider.getSize();
 
-        TouchAction swipe = new TouchAction(driver).press(slider, 0, size.height / 2).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3)))
-                .moveTo(slider, size.width / 2, size.height / 2).release();
+        TouchAction swipe = new TouchAction(driver).press(ElementOption.element(slider, 0, size.height / 2))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3)))
+                .moveTo(ElementOption.element(slider, size.width / 2, size.height / 2)).release();
         swipe.perform();
     }
 
@@ -93,25 +94,30 @@ public class GestureTest extends BaseUserTest {
         MobileElement slider = driver.findElementByAccessibilityId(locator);
         Dimension size = slider.getSize();
 
-        TouchAction swipe = new TouchAction(driver).press(slider, size.width / 2, size.height - 20)
-                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2))).moveTo(slider, size.width / 2, size.height / 2 + 50).release();
+        TouchAction swipe = new TouchAction(driver).press(ElementOption.element(slider, size.width / 2, size.height - 20))
+                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
+                .moveTo(ElementOption.element(slider, size.width / 2, size.height / 2 + 50)).release();
         swipe.perform();
     }
 
-
+    @Test
     public void zoom() throws InterruptedException {
-        MobileElement zoom = driver.findElementByClassName("android.widget.ImageView");
-        ;
-        Dimension size = zoom.getSize();
-        System.out.println("****SIZE" + size);
+        login();
+        driver.findElementByAccessibilityId("slider1").click();
+        Thread.sleep(1000);
+        MobileElement slider = driver.findElementByAccessibilityId("slider");
+        MobileElement slider1 = driver.findElementByAccessibilityId("slider1");
+
+        Dimension sizeSlider = slider.getSize();
+        Dimension sizeSlider1 = slider1.getSize();
         TouchAction touchAction1 =
-                new TouchAction(driver).press(size.getWidth() / 2, size.getHeight() / 2)
-                        .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3))).moveTo(size.getWidth() / 2 + 5, size.getHeight() / 2 + 5)
-                        .release();
+                new TouchAction(driver).press(ElementOption.element(slider, 0, sizeSlider.height / 2))
+                        .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
+                        .moveTo(ElementOption.element(slider, sizeSlider.width / 2, sizeSlider.height / 2)).release();
         TouchAction touchAction2 =
-                new TouchAction(driver).press(size.getWidth() / 2 - 5, size.getHeight() / 2 - 5)
-                        .waitAction().moveTo(size.getWidth(), size.getHeight())
-                        .release();
+                new TouchAction(driver).press(ElementOption.element(slider1, 0, sizeSlider1.height / 2)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
+                        .moveTo(ElementOption.element(slider1, sizeSlider1.width / 2, sizeSlider1.height / 2)).release();
         new MultiTouchAction(driver).add(touchAction1).add(touchAction2).perform();
+        Thread.sleep(2000);
     }
 }
