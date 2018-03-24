@@ -22,9 +22,19 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>6.0.0-BETA1</version>
+            <version>6.0.0-BETA4</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>

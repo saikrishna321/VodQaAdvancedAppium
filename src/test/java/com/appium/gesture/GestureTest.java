@@ -12,12 +12,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
-
 import java.time.Duration;
 
-/**
- * Created by saikrisv on 07/12/16.
- */
 public class GestureTest extends BaseUserTest {
 
     @Test
@@ -34,19 +30,16 @@ public class GestureTest extends BaseUserTest {
     }
 
     private void login() {
-        new WebDriverWait(driver, 30).until(ExpectedConditions.
+        wait.until(ExpectedConditions.
                 elementToBeClickable(MobileBy.AccessibilityId("login"))).click();
     }
 
     @Test
-    public void veriticalSwipeTest() throws InterruptedException {
+    public void verticalSwipeTest() throws InterruptedException {
         login();
+        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("verticalSwipe")));
         driver.findElementByAccessibilityId("verticalSwipe").click();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("listview")));
         verticalSwipe("listview");
     }
 
@@ -101,7 +94,7 @@ public class GestureTest extends BaseUserTest {
     }
 
     @Test
-    public void zoom() throws InterruptedException {
+    public void multiTouchTest() throws InterruptedException {
         login();
         driver.findElementByAccessibilityId("slider1").click();
         Thread.sleep(1000);
@@ -113,10 +106,10 @@ public class GestureTest extends BaseUserTest {
         TouchAction touchAction1 =
                 new TouchAction(driver).press(ElementOption.element(slider, 0, sizeSlider.height / 2))
                         .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
-                        .moveTo(ElementOption.element(slider, sizeSlider.width / 2, sizeSlider.height / 2)).release();
+                        .moveTo(ElementOption.element(slider, sizeSlider.width / 2, sizeSlider.height / 2));
         TouchAction touchAction2 =
                 new TouchAction(driver).press(ElementOption.element(slider1, 0, sizeSlider1.height / 2)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
-                        .moveTo(ElementOption.element(slider1, sizeSlider1.width / 2, sizeSlider1.height / 2)).release();
+                        .moveTo(ElementOption.element(slider1, sizeSlider1.width / 2, sizeSlider1.height / 2));
         new MultiTouchAction(driver).add(touchAction1).add(touchAction2).perform();
         Thread.sleep(2000);
     }
