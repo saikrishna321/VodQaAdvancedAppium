@@ -53,7 +53,7 @@ public class AppManagementTest {
 
             driver.terminateApp(BUNDLE_ID);
             driver.installApp(appUpgradeVersion);
-            driver.launchApp();
+            driver.activateApp(BUNDLE_ID);
 
             wait.until(ExpectedConditions.presenceOfElementLocated(echoBox)).click();
             savedText = wait.until(ExpectedConditions.presenceOfElementLocated(savedMsg)).getText();
