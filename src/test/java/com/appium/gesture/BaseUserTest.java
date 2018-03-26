@@ -5,6 +5,7 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -14,27 +15,26 @@ import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.ServerSocket;
 import java.net.URL;
 
 /**
  * Created by saikrisv on 07/12/16.
  */
 public class BaseUserTest {
-    private static AppiumDriverLocalService service;
-    protected static AppiumDriver<MobileElement> driver;
+    private  AppiumDriverLocalService service;
+    public AppiumDriver<MobileElement> driver;
     WebDriverWait wait;
 
     /**
      * initialization.
      */
-    @BeforeClass
-    public static void beforeClass() throws Exception {
+    @BeforeSuite
+    public void beforeClass() throws Exception {
         service = AppiumDriverLocalService.
                 buildService(new AppiumServiceBuilder().usingAnyFreePort());
         service.start();
@@ -45,7 +45,7 @@ public class BaseUserTest {
         }
     }
 
-    private static void androidCaps() throws MalformedURLException {
+    private  void androidCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 700000);
@@ -55,7 +55,18 @@ public class BaseUserTest {
         driver = new AndroidDriver<MobileElement>(service.getUrl(), capabilities);
     }
 
-    private static void iosCaps() throws MalformedURLException {
+    private void androidCapsParallel(String udid) throws IOException {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+        capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 700000);
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,"UIAutomator2");
+        capabilities.setCapability(MobileCapabilityType.UDID,udid);
+        capabilities.setCapability(AndroidMobileCapabilityType.SYSTEM_PORT,getAvailablePort());
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQA.apk");
+        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+    }
+
+    private  void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11.0");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
@@ -68,12 +79,21 @@ public class BaseUserTest {
 
 
     @BeforeMethod
-    public void launchApp() throws MalformedURLException {
-      androidCaps();
+    @Parameters(value = {"device"} )
+    public void launchApp(String device) throws IOException {
+        System.out.println("device udid----" + device + Thread.currentThread().getName());
+        androidCapsParallel(device);
 //      iosCaps();
         wait = new WebDriverWait(driver, 30);
     }
 
+    public int getAvailablePort() throws IOException {
+        ServerSocket socket = new ServerSocket(0);
+        socket.setReuseAddress(true);
+        int port = socket.getLocalPort();
+        socket.close();
+        return port;
+    }
 
     @AfterMethod
     public void quitApp(){
@@ -85,7 +105,7 @@ public class BaseUserTest {
      * finishing.
      */
     @AfterClass
-    public static void afterClass() {
+    public  void afterClass() {
         if (service != null) {
             service.stop();
         }
