@@ -9,7 +9,7 @@
     </classes>
   </test>
   <test name="TestNG Test1" preserve-order="false">
-    <parameter name="device" value="192.168.58.101:5555"/>
+    <parameter name="device" value="5a4b1031"/>
     <classes>
       <class name="com.appium.gesture.GestureTest">
       </class>

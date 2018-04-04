@@ -73,7 +73,7 @@ public class BaseUserTest {
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         //sometimes environment has performance problems
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/vodqa.zip");
+        capabilities.setCapability(MobileCapabilityType.APP, "https://github.com/shridharkalagi/AppiumSample/blob/master/vodqa.zip?raw=true");
         driver = new IOSDriver<MobileElement>(service.getUrl(), capabilities);
     }
 
@@ -81,9 +81,8 @@ public class BaseUserTest {
     @BeforeMethod
     @Parameters(value = {"device"} )
     public void launchApp(String device) throws IOException {
-        System.out.println("device udid----" + device + Thread.currentThread().getName());
         androidCapsParallel(device);
-//      iosCaps();
+        //iosCaps();
         wait = new WebDriverWait(driver, 30);
     }
 

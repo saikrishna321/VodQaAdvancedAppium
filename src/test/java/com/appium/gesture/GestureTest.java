@@ -96,8 +96,9 @@ public class GestureTest extends BaseUserTest {
     @Test
     public void multiTouchTest() throws InterruptedException {
         login();
-        driver.findElementByAccessibilityId("slider1").click();
-        Thread.sleep(1000);
+        wait.until(ExpectedConditions.
+                elementToBeClickable(MobileBy.AccessibilityId("slider1"))).click();
+        Thread.sleep(3000);
         MobileElement slider = driver.findElementByAccessibilityId("slider");
         MobileElement slider1 = driver.findElementByAccessibilityId("slider1");
 
