@@ -50,8 +50,8 @@ public class GestureTest extends BaseUserTest {
         driver.findElementByAccessibilityId("dragAndDrop").click();
         MobileElement dragMe = (MobileElement) new WebDriverWait(driver, 30).until(ExpectedConditions
                 .elementToBeClickable(MobileBy.AccessibilityId("dragMe")));
-        new TouchAction(driver).press(dragMe).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3)))
-                .moveTo(driver.findElementByAccessibilityId("dropzone")).release().perform();
+        new TouchAction(driver).press(ElementOption.element(dragMe)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3)))
+                .moveTo(ElementOption.element(driver.findElementByAccessibilityId("dropzone"))).release().perform();
     }
 
     @Test

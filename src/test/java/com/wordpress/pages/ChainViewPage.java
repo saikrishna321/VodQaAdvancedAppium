@@ -6,6 +6,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
+
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,8 +20,8 @@ public class ChainViewPage extends Helpers {
     ChainViewPage(AppiumDriver<MobileElement> driver) {
         super(driver);
         chainViewPageObjects = new ChainViewPageObjects();
-        PageFactory.initElements(new AppiumFieldDecorator(driver,
-                15, TimeUnit.MILLISECONDS), chainViewPageObjects);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10))
+                , chainViewPageObjects);
     }
 
     public String getSecondComment() {

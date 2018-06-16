@@ -8,6 +8,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,8 +21,8 @@ public class WelcomePage extends Helpers {
     public WelcomePage(AppiumDriver<MobileElement> driver) {
         super(driver);
         welcomePageObjects = new WelcomePageObjects();
-        PageFactory.initElements(new AppiumFieldDecorator(driver, 10,
-                TimeUnit.MILLISECONDS), welcomePageObjects);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10))
+                , welcomePageObjects);
     }
 
 

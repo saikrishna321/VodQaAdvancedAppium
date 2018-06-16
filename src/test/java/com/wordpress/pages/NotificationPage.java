@@ -7,6 +7,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,8 +18,7 @@ public class NotificationPage extends Helpers {
     public NotificationPage(AppiumDriver<MobileElement> driver) {
         super(driver);
         notificationPageObjects = new NotificationPageObjects();
-        PageFactory.initElements(new AppiumFieldDecorator(driver,15,
-                TimeUnit.MILLISECONDS),notificationPageObjects);
+        PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10)),notificationPageObjects);
     }
 
 

@@ -68,8 +68,8 @@ public class BaseUserTest {
 
     private  void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11.0");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11.3");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone X");
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         //sometimes environment has performance problems
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
@@ -79,10 +79,10 @@ public class BaseUserTest {
 
 
     @BeforeMethod
-    @Parameters(value = {"device"} )
-    public void launchApp(String device) throws IOException {
-        androidCapsParallel(device);
-        //iosCaps();
+    public void launchApp() throws IOException {
+//        androidCapsParallel(device);
+//        androidCaps();
+        iosCaps();
         wait = new WebDriverWait(driver, 30);
     }
 

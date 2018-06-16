@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by saikrisv on 12/29/16.
  */
-public class LoginPage extends Helpers{
+public class LoginPage extends Helpers {
 
     private LoginPageObjects loginPageObjects;
 
