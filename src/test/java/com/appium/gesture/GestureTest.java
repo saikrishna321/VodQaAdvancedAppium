@@ -4,15 +4,29 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSTouchAction;
 import io.appium.java_client.touch.LongPressOptions;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
+import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Arrays;
 
 public class GestureTest extends BaseUserTest {
 
@@ -21,12 +35,19 @@ public class GestureTest extends BaseUserTest {
         login();
         driver.findElementByAccessibilityId("slider1").click();
         MobileElement slider = driver.findElementByAccessibilityId("slider");
-        Dimension size = slider.getSize();
 
-        TouchAction swipe = new TouchAction(driver).press(ElementOption.element(slider, 0, size.height / 2))
-                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3)))
-                .moveTo(ElementOption.element(slider, size.width / 2, size.height / 2)).release();
-        swipe.perform();
+        Point source = slider.getLocation();
+
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence dragNDrop = new Sequence(finger, 1);
+        dragNDrop.addAction(finger.createPointerMove(Duration.ofMillis(0),
+                PointerInput.Origin.viewport(), source.x, source.y));
+        dragNDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.MIDDLE.asArg()));
+        dragNDrop.addAction(finger.createPointerMove(Duration.ofMillis(600),
+                PointerInput.Origin.viewport(),
+                source.x + 400 , +  source.y));
+        dragNDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
+        driver.perform(Arrays.asList(dragNDrop));
     }
 
     private void login() {
@@ -50,8 +71,18 @@ public class GestureTest extends BaseUserTest {
         driver.findElementByAccessibilityId("dragAndDrop").click();
         MobileElement dragMe = (MobileElement) new WebDriverWait(driver, 30).until(ExpectedConditions
                 .elementToBeClickable(MobileBy.AccessibilityId("dragMe")));
-        new TouchAction(driver).press(ElementOption.element(dragMe)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(3)))
-                .moveTo(ElementOption.element(driver.findElementByAccessibilityId("dropzone"))).release().perform();
+        Point source = dragMe.getCenter();
+        Point target = driver.findElementByAccessibilityId("dropzone").getCenter();
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence dragNDrop = new Sequence(finger, 1);
+        dragNDrop.addAction(finger.createPointerMove(Duration.ofMillis(0),
+                PointerInput.Origin.viewport(), source.x, source.y));
+        dragNDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.MIDDLE.asArg()));
+        dragNDrop.addAction(finger.createPointerMove(Duration.ofMillis(600),
+                PointerInput.Origin.viewport(),
+                target.x, target.y));
+        dragNDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
+        driver.perform(Arrays.asList(dragNDrop));
     }
 
     @Test
@@ -61,11 +92,8 @@ public class GestureTest extends BaseUserTest {
         driver.findElementByAccessibilityId("longPress").click();
         MobileElement longpress = (MobileElement) new WebDriverWait(driver, 30).
                 until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("longpress")));
-
-        LongPressOptions longPressOptions = new LongPressOptions();
-        longPressOptions.withDuration(Duration.ofSeconds(3)).withElement(ElementOption.element(longpress));
-
-        new TouchAction(driver).longPress(longPressOptions).perform();
+         new Actions(driver).clickAndHold(longpress).perform();
+        Thread.sleep(5000);
     }
 
 
@@ -78,6 +106,17 @@ public class GestureTest extends BaseUserTest {
                 until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("doubleTapMe")));
         Thread.sleep(1000);
         new IOSTouchAction(driver).doubleTap(ElementOption.element(element)).perform();
+
+        Point source = element.getCenter();
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence dragNDrop = new Sequence(finger, 1);
+        dragNDrop.addAction(finger.createPointerMove(Duration.ofSeconds(1),
+                PointerInput.Origin.viewport(), source.x, source.y));
+        dragNDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.MIDDLE.asArg()));
+        dragNDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
+        dragNDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.MIDDLE.asArg()));
+        dragNDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
+        driver.perform(Arrays.asList(dragNDrop));
         Thread.sleep(5000);
     }
 
@@ -85,12 +124,17 @@ public class GestureTest extends BaseUserTest {
     private void verticalSwipe(String locator) throws InterruptedException {
         Thread.sleep(3000);
         MobileElement slider = driver.findElementByAccessibilityId(locator);
-        Dimension size = slider.getSize();
-
-        TouchAction swipe = new TouchAction(driver).press(ElementOption.element(slider, size.width / 2, size.height - 20))
-                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
-                .moveTo(ElementOption.element(slider, size.width / 2, size.height / 2 + 50)).release();
-        swipe.perform();
+        Point source = slider.getCenter();
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence dragNDrop = new Sequence(finger, 1);
+        dragNDrop.addAction(finger.createPointerMove(Duration.ofMillis(0),
+                PointerInput.Origin.viewport(),
+                source.x / 2, source.y + 400));
+        dragNDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.MIDDLE.asArg()));
+        dragNDrop.addAction(finger.createPointerMove(Duration.ofMillis(600),
+                PointerInput.Origin.viewport(), source.getX() / 2, source.y / 2));
+        dragNDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
+        driver.perform(Arrays.asList(dragNDrop));
     }
 
     @Test

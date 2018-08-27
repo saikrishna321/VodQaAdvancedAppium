@@ -32,9 +32,9 @@
             <artifactId>hamcrest-library</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.appium</groupId>
+            <groupId>com.github.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>6.1.0</version>
+            <version>dfb285e3b8</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>

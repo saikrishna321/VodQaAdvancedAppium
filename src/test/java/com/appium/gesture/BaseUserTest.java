@@ -33,7 +33,6 @@ public class BaseUserTest {
     /**
      * initialization.
      */
-    @BeforeSuite
     public void beforeClass() throws Exception {
         service = AppiumDriverLocalService.
                 buildService(new AppiumServiceBuilder().usingAnyFreePort());
@@ -81,8 +80,8 @@ public class BaseUserTest {
     @BeforeMethod
     public void launchApp() throws IOException {
 //        androidCapsParallel(device);
-//        androidCaps();
-        iosCaps();
+        androidCaps();
+       // iosCaps();
         wait = new WebDriverWait(driver, 30);
     }
 
@@ -103,7 +102,7 @@ public class BaseUserTest {
     /**
      * finishing.
      */
-    @AfterClass
+
     public  void afterClass() {
         if (service != null) {
             service.stop();
