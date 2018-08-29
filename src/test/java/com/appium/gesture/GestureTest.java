@@ -107,11 +107,8 @@ public class GestureTest extends BaseUserTest {
         pinchAndZoom2.addAction(finger2.createPointerMove(Duration.ofMillis(10000),
                 PointerInput.Origin.viewport(), source.x * 3 / 4, source.y * 3 / 4));
         pinchAndZoom2.addAction(finger2.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-
-        List sequence = new ArrayList();
-        sequence.add(pinchAndZoom1);
-        sequence.add(pinchAndZoom2);
-        driver.perform(sequence);
+        
+        driver.perform(Arrays.asList(pinchAndZoom1,pinchAndZoom2));
     }
 
     @Test
