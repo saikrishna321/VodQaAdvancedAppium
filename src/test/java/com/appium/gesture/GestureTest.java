@@ -4,16 +4,11 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSTouchAction;
-import io.appium.java_client.touch.LongPressOptions;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
-import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
@@ -21,12 +16,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class GestureTest extends BaseUserTest {
 
@@ -45,7 +39,7 @@ public class GestureTest extends BaseUserTest {
         dragNDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.MIDDLE.asArg()));
         dragNDrop.addAction(finger.createPointerMove(Duration.ofMillis(600),
                 PointerInput.Origin.viewport(),
-                source.x + 400 , +  source.y));
+                source.x + 400, +source.y));
         dragNDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
         driver.perform(Arrays.asList(dragNDrop));
     }
@@ -86,13 +80,45 @@ public class GestureTest extends BaseUserTest {
     }
 
     @Test
+    public void pinchAndZoom() throws InterruptedException {
+        login();
+        Thread.sleep(5000);
+        driver.findElementByAccessibilityId("photoView").click();
+        Thread.sleep(3000);
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        PointerInput finger2 = new PointerInput(PointerInput.Kind.TOUCH, "finger2");
+
+        Dimension size = driver.manage().window().getSize();
+        Point source = new Point(size.getWidth(), size.getHeight());
+
+        Sequence pinchAndZoom1 = new Sequence(finger, 0);
+        pinchAndZoom1.addAction(finger.createPointerMove(Duration.ofMillis(0),
+                PointerInput.Origin.viewport(), source.x / 2, source.y / 2));
+        pinchAndZoom1.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        pinchAndZoom1.addAction(finger.createPointerMove(Duration.ofMillis(10000),
+                PointerInput.Origin.viewport(), source.x / 3, source.y / 3));
+        pinchAndZoom1.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+
+        Sequence pinchAndZoom2 = new Sequence(finger2, 0);
+        pinchAndZoom2.addAction(finger2.createPointerMove(Duration.ofMillis(0),
+                PointerInput.Origin.viewport(), source.x / 2, source.y / 2));
+        pinchAndZoom2.addAction(finger2.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        pinchAndZoom2.addAction(finger2.createPointerMove(Duration.ofMillis(10000),
+                PointerInput.Origin.viewport(), source.x * 3 / 4, source.y * 3 / 4));
+        pinchAndZoom2.addAction(finger2.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        
+        driver.perform(Arrays.asList(pinchAndZoom1,pinchAndZoom2));
+    }
+
+    @Test
     public void longPress() throws InterruptedException {
         login();
         Thread.sleep(5000);
         driver.findElementByAccessibilityId("longPress").click();
         MobileElement longpress = (MobileElement) new WebDriverWait(driver, 30).
                 until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("longpress")));
-         new Actions(driver).clickAndHold(longpress).perform();
+        new Actions(driver).clickAndHold(longpress).perform();
         Thread.sleep(5000);
     }
 
