@@ -108,4 +108,9 @@ public class BaseUserTest {
             service.stop();
         }
     }
+
+    public void login() {
+        wait.until(ExpectedConditions.
+                elementToBeClickable(MobileBy.AccessibilityId("login"))).click();
+    }
 }

@@ -4,6 +4,7 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSTouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
@@ -18,10 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class GestureTest extends BaseUserTest {
 
@@ -45,10 +43,6 @@ public class GestureTest extends BaseUserTest {
         driver.perform(Arrays.asList(dragNDrop));
     }
 
-    private void login() {
-        wait.until(ExpectedConditions.
-                elementToBeClickable(MobileBy.AccessibilityId("login"))).click();
-    }
 
     @Test
     public void verticalSwipeTest() throws InterruptedException {
