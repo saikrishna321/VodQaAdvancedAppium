@@ -34,7 +34,7 @@
         <dependency>
             <groupId>com.github.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>dfb285e3b8</version>
+            <version>18eba219ed</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
