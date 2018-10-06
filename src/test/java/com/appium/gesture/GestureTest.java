@@ -14,6 +14,7 @@ import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -52,7 +53,7 @@ public class GestureTest extends BaseUserTest {
         verticalSwipe("listview");
     }
 
-    @Test
+    @Test(groups = {"azureiOS"})
     public void dragAndDrop() throws InterruptedException {
         login();
         Thread.sleep(5000);
@@ -72,6 +73,7 @@ public class GestureTest extends BaseUserTest {
                 target.x, target.y));
         dragNDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
         driver.perform(Arrays.asList(dragNDrop));
+        Assert.assertTrue(driver.findElementsByAccessibilityId("Circle dropped").size() == 1);
     }
 
     @Test

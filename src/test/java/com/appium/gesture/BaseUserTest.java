@@ -33,6 +33,7 @@ public class BaseUserTest {
     /**
      * initialization.
      */
+    @BeforeClass
     public void beforeClass() throws Exception {
         service = AppiumDriverLocalService.
                 buildService(new AppiumServiceBuilder().usingAnyFreePort());
@@ -67,7 +68,7 @@ public class BaseUserTest {
 
     private  void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11.3");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11.4");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone X");
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         //sometimes environment has performance problems
@@ -79,9 +80,11 @@ public class BaseUserTest {
 
     @BeforeMethod
     public void launchApp() throws IOException {
-//        androidCapsParallel(device);
-        androidCaps();
-       // iosCaps();
+        if(System.getenv("Platform").equalsIgnoreCase("iOS")) {
+            iosCaps();
+        } else {
+            androidCaps();
+        }
         wait = new WebDriverWait(driver, 30);
     }
 
@@ -102,7 +105,7 @@ public class BaseUserTest {
     /**
      * finishing.
      */
-
+    @AfterClass
     public  void afterClass() {
         if (service != null) {
             service.stop();

@@ -12,4 +12,6 @@ steps:
     xcrun simctl list -j
     npm install -g appium@beta
     appium -v
+    Platform='ios' mvn clean test
+
   displayName: 'Build with Maven'

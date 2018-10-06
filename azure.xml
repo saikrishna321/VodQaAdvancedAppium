@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="2" verbose="2" name="TestNG Forum" parallel="tests" data-provider-thread-count="2">
+  <test name="TestNG Test0" preserve-order="false">
+    <parameter name="device" value="emulator-5554"/>
+    <classes>
+      <class name="com.appium.gesture.GestureTest">
+        <methods>
+          <include name = "dragAndDrop"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite> <!-- TestNG Forum -->
