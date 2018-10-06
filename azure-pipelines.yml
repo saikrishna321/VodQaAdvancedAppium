@@ -10,4 +10,6 @@ steps:
 - script: |
     brew outdated xctool || brew upgrade xctool
     xcrun simctl list -j
+    npm install -g appium@beta
+    appium -v
   displayName: 'Build with Maven'
