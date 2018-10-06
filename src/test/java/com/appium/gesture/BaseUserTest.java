@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.ServerSocket;
@@ -34,9 +35,11 @@ public class BaseUserTest {
      * initialization.
      */
     @BeforeClass
-    public void beforeClass() throws Exception {
+    public void beforeClass() {
         service = AppiumDriverLocalService.
-                buildService(new AppiumServiceBuilder().usingAnyFreePort());
+                buildService(new AppiumServiceBuilder().
+                        withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
+                        .usingAnyFreePort());
         service.start();
 
         if (service == null || !service.isRunning()) {
