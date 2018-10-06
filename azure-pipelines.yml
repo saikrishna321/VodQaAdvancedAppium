@@ -9,5 +9,5 @@ pool:
 steps:
 - script: |
     brew outdated xctool || brew upgrade xctool
-    xcrun simctl list -devices
+    xcrun simctl list -j
   displayName: 'Build with Maven'
