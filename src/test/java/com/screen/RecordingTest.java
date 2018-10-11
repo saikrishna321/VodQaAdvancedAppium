@@ -17,10 +17,10 @@ import java.nio.file.Paths;
 import java.util.Base64;
 
 
-public class recording extends BaseUserTest{
+public class RecordingTest extends BaseUserTest{
 
     @Test
-    public void recordiOSScreen() throws IOException {
+    public void iOSScreenRecordTest() throws IOException {
         ((IOSDriver)driver).startRecordingScreen();
         String s = ((IOSDriver) driver).stopRecordingScreen();
         byte[] decode = Base64.getDecoder().decode(s);
@@ -29,7 +29,7 @@ public class recording extends BaseUserTest{
     }
 
     @Test
-    public void recordAndroidScreen() throws IOException {
+    public void androidScreenRecordTest() throws IOException {
         ((AndroidDriver)driver).startRecordingScreen();
         String s = ((AndroidDriver) driver).stopRecordingScreen();
         byte[] decode = Base64.getDecoder().decode(s);
