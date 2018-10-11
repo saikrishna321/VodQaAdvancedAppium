@@ -12,6 +12,8 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyException;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import io.appium.java_client.service.local.flags.ServerArgument;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -37,8 +39,10 @@ public class BaseUserTest {
     @BeforeClass
     public void beforeClass() {
         service = AppiumDriverLocalService.
-                buildService(new AppiumServiceBuilder().
-                        withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
+                buildService(new AppiumServiceBuilder()
+                        .withArgument(GeneralServerFlag.RELAXED_SECURITY)
+                        .withArgument(GeneralServerFlag.LOG_TIMESTAMP)
+                        .withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
                         .usingAnyFreePort());
         service.start();
 
@@ -52,7 +56,7 @@ public class BaseUserTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,"Espresso");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,"UIAutomator2");
         capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQA.apk");
         //capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/java_client_pr/java-client/src/test/java/io/appium/java_client/ApiDemos-debug.apk");
         driver = new AndroidDriver<MobileElement>(service.getUrl(), capabilities);
@@ -71,8 +75,8 @@ public class BaseUserTest {
 
     private  void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11.4");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone X");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12.0");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone XS");
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         //sometimes environment has performance problems
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
