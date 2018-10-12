@@ -92,7 +92,8 @@ public class GestureTest extends BaseUserTest {
         pinchAndZoom1.addAction(finger.createPointerMove(Duration.ofMillis(0),
                 PointerInput.Origin.viewport(), source.x / 2, source.y / 2));
         pinchAndZoom1.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-        pinchAndZoom1.addAction(finger.createPointerMove(Duration.ofMillis(10000),
+        pinchAndZoom1.addAction(new Pause(finger, Duration.ofMillis(100)));
+        pinchAndZoom1.addAction(finger.createPointerMove(Duration.ofMillis(600),
                 PointerInput.Origin.viewport(), source.x / 3, source.y / 3));
         pinchAndZoom1.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
@@ -101,7 +102,8 @@ public class GestureTest extends BaseUserTest {
         pinchAndZoom2.addAction(finger2.createPointerMove(Duration.ofMillis(0),
                 PointerInput.Origin.viewport(), source.x / 2, source.y / 2));
         pinchAndZoom2.addAction(finger2.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-        pinchAndZoom2.addAction(finger2.createPointerMove(Duration.ofMillis(10000),
+        pinchAndZoom2.addAction(new Pause(finger, Duration.ofMillis(100)));
+        pinchAndZoom2.addAction(finger2.createPointerMove(Duration.ofMillis(600),
                 PointerInput.Origin.viewport(), source.x * 3 / 4, source.y * 3 / 4));
         pinchAndZoom2.addAction(finger2.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         
