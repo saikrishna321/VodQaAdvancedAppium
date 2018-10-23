@@ -53,7 +53,7 @@ public class GestureTest extends BaseUserTest {
         verticalSwipe("listview");
     }
 
-    @Test(groups = {"azureiOS"})
+    @Test
     public void dragAndDrop() throws InterruptedException {
         login();
         Thread.sleep(5000);
@@ -106,7 +106,7 @@ public class GestureTest extends BaseUserTest {
         pinchAndZoom2.addAction(finger2.createPointerMove(Duration.ofMillis(600),
                 PointerInput.Origin.viewport(), source.x * 3 / 4, source.y * 3 / 4));
         pinchAndZoom2.addAction(finger2.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-        
+
         driver.perform(Arrays.asList(pinchAndZoom1,pinchAndZoom2));
     }
 
@@ -136,12 +136,13 @@ public class GestureTest extends BaseUserTest {
         tap.addAction(finger.createPointerMove(Duration.ofMillis(0),
                 PointerInput.Origin.viewport(), source.x, source.y));
         tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-        tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         tap.addAction(new Pause(finger, Duration.ofMillis(100)));
+        tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        tap.addAction(new Pause(finger, Duration.ofMillis(40)));
         tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        tap.addAction(new Pause(finger, Duration.ofMillis(100)));
         tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         driver.perform(Arrays.asList(tap));
-        Thread.sleep(5000);
     }
 
 
