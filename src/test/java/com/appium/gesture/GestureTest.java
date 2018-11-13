@@ -26,6 +26,7 @@ public class GestureTest extends BaseUserTest {
     public void horizontalSwipingTest() throws Exception {
         login();
         driver.findElementByAccessibilityId("slider1").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("slider")));
         MobileElement slider = driver.findElementByAccessibilityId("slider");
 
         Point source = slider.getLocation();
