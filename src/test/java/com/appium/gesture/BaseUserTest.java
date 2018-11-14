@@ -89,14 +89,6 @@ public class BaseUserTest extends AbstractTestNGSpringContextTests {
     }
 
 
-    public int getAvailablePort() throws IOException {
-        ServerSocket socket = new ServerSocket(0);
-        socket.setReuseAddress(true);
-        int port = socket.getLocalPort();
-        socket.close();
-        return port;
-    }
-
     @AfterMethod
     public void quitApp() {
         if (driver != null) {
