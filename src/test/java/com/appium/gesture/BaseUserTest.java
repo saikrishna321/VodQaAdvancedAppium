@@ -1,10 +1,8 @@
 package com.appium.gesture;
 
-import com.wordpress.pageobjects.LoginPageObjects;
-import com.wordpress.pages.LoginPage;
-import com.wordpress.utils.BeanPage;
 import com.wordpress.utils.BeanPageObjects;
 import com.wordpress.utils.Helpers;
+import com.wordpress.utils.PageObjectBeanPostProcessor;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
@@ -29,15 +27,14 @@ import org.testng.annotations.AfterMethod;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.ServerSocket;
 import java.net.URL;
 
 /**
  * Created by saikrisv on 07/12/16.
  */
 @Configuration
-@ComponentScan(basePackageClasses = BaseUserTest.class)
-@ContextConfiguration(classes = {BaseUserTest.class, BeanPage.class, BeanPageObjects.class,
+@ContextConfiguration(classes = {PageObjectBeanPostProcessor.class,
+        BaseUserTest.class, BeanPageObjects.class,
         AutowiredAnnotationBeanPostProcessor.class})
 public class BaseUserTest extends AbstractTestNGSpringContextTests {
     private AppiumDriverLocalService service;
