@@ -1,6 +1,7 @@
 package com.wordpress.utils;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -10,6 +11,8 @@ import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
@@ -23,6 +26,7 @@ public class BaseTest {
 
     private AppiumDriverLocalService service;
     public AppiumDriver<MobileElement> driver;
+    public WebDriverWait wait;
 
     @BeforeClass
     public void beforeClass() throws Exception {
@@ -49,9 +53,9 @@ public class BaseTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 900000);
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,AutomationName.ANDROID_UIAUTOMATOR2);
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, ".ui.accounts.SignInActivity");
-        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/wordpress.apk");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,AutomationName.ESPRESSO);
+        //capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, ".ui.accounts.SignInActivity");
+        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/java-client/src/test/java/io/appium/java_client/ApiDemos-debug.apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
 
@@ -66,5 +70,11 @@ public class BaseTest {
         capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/WordPress.app");
         driver = new IOSDriver<>(service.getUrl(), capabilities);
         System.out.println("test");
+    }
+
+    public void login() {
+        wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.
+            elementToBeClickable(MobileBy.AccessibilityId("login"))).click();
     }
 }

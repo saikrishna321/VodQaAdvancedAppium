@@ -16,6 +16,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -39,13 +40,13 @@ import java.net.URL;
 public class BaseUserTest extends AbstractTestNGSpringContextTests {
     private AppiumDriverLocalService service;
 
-    public AppiumDriver<MobileElement> driver;
     WebDriverWait wait;
 
     /**
      * initialization.
      */
-
+    @Autowired
+    public AppiumDriver driver;
 
     public void beforeClass() {
         service = AppiumDriverLocalService.
@@ -99,6 +100,7 @@ public class BaseUserTest extends AbstractTestNGSpringContextTests {
     }
 
     public void login() {
+        wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.
                 elementToBeClickable(MobileBy.AccessibilityId("login"))).click();
     }

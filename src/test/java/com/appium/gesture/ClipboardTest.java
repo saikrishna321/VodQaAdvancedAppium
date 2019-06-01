@@ -21,7 +21,7 @@ public class ClipboardTest extends BaseUserTest {
         ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.BACK));
         driver.findElementByAccessibilityId("username").clear();
 
-        driver.findElementByAccessibilityId("username").setValue(clipboardText);
+        //driver.findElementByAccessibilityId("username").setValue(clipboardText);
         Thread.sleep(5000);
     }
 }

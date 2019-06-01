@@ -39,19 +39,27 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>18eba219ed</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>RELEASE</version>
+            <groupId>com.github.saikrishna321</groupId>
+            <artifactId>AppiumTestDistribution</artifactId>
+            <version>10.0.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.appium</groupId>
+                    <artifactId>java-client</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>c559326686</version>
         </dependency>
     </dependencies>
 

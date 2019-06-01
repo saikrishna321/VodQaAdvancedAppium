@@ -1,13 +1,13 @@
 package com.appium.gesture;
 
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.MultiTouchAction;
-import io.appium.java_client.TouchAction;
+import com.wordpress.pages.LoginPage;
+import com.wordpress.utils.BaseTest;
+import io.appium.java_client.*;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
-import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
@@ -19,11 +19,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.time.Duration;
 import java.util.*;
 
-public class GestureTest extends BaseUserTest {
+public class GestureTest extends BaseTest {
 
     @Test
     public void horizontalSwipingTest() throws Exception {
@@ -140,18 +139,19 @@ public class GestureTest extends BaseUserTest {
         tap.addAction(finger.createPointerMove(Duration.ofMillis(0),
                 PointerInput.Origin.viewport(), source.x, source.y));
         tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-        tap.addAction(new Pause(finger, Duration.ofMillis(100)));
+        tap.addAction(new Pause(finger, Duration.ofMillis(200)));
         tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         tap.addAction(new Pause(finger, Duration.ofMillis(40)));
         tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-        tap.addAction(new Pause(finger, Duration.ofMillis(100)));
+        tap.addAction(new Pause(finger, Duration.ofMillis(200)));
         tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         driver.perform(Arrays.asList(tap));
+        Thread.sleep(4000);
     }
 
 
     private void verticalSwipe(String locator) throws InterruptedException {
-        Thread.sleep(3000);
+        Thread.sleep(5000);
         MobileElement slider = driver.findElementByAccessibilityId(locator);
         Point source = slider.getCenter();
         PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
@@ -186,5 +186,19 @@ public class GestureTest extends BaseUserTest {
                         .moveTo(ElementOption.element(slider1, sizeSlider1.width / 2, sizeSlider1.height / 2));
         new MultiTouchAction(driver).add(touchAction1).add(touchAction2).perform();
         Thread.sleep(2000);
+    }
+
+    @Test
+    public void dataMatcher() throws InterruptedException {
+//        login();
+//        wait.until(ExpectedConditions.
+//            elementToBeClickable(MobileBy.AccessibilityId("slider1")));
+        JSONObject orderJSON = new JSONObject();
+        JSONArray objects = new JSONArray();
+        objects.put("title");
+        objects.put("TextClock");
+        orderJSON.put("name", "hasEntry");
+        orderJSON.put("args", objects);
+        ((AndroidDriver) driver).findElementByAndroidDataMatcher(orderJSON.toString()).click();
     }
 }
