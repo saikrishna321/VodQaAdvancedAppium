@@ -1,10 +1,11 @@
 package com.appium.gesture;
 
+import com.wordpress.utils.BaseTest;
 import io.appium.java_client.MobileBy;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class iOSLocatorTest extends BaseUserTest {
+public class iOSLocatorTest extends BaseTest {
 
     @Test
     public void classChainTest() {

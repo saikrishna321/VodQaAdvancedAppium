@@ -34,7 +34,7 @@ public class AndroidUpgradeTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("avd", "Pixel");
+//        capabilities.setCapability("avd", "Pixel");
         capabilities.setCapability("deviceName", "Android Emulator");
         capabilities.setCapability("automationName", "UiAutomator2");
         capabilities.setCapability("app", APP_V1_0_0);

@@ -32,8 +32,8 @@ public class AppManagementTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         capabilities.setCapability("platformName", "iOS");
-        capabilities.setCapability("deviceName", "iPhone 6");
-        capabilities.setCapability("platformVersion", "11.0");
+        capabilities.setCapability("deviceName", "iPhone Xs");
+        capabilities.setCapability("platformVersion", "12.2");
         capabilities.setCapability("app", APP_V1_0_0);
 
         // change this to APP_V1_0_1 to experience a failing scenario

@@ -36,7 +36,7 @@ public class BaseTest {
         if (service == null || !service.isRunning()) {
             throw new RuntimeException("An appium server node is not started!");
         }
-        androidCaps();
+        iosCaps();
     }
 
     @AfterClass
@@ -55,20 +55,20 @@ public class BaseTest {
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 900000);
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,AutomationName.ESPRESSO);
         //capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, ".ui.accounts.SignInActivity");
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/java-client/src/test/java/io/appium/java_client/ApiDemos-debug.apk");
+        capabilities.setCapability(MobileCapabilityType.APP, "/Users/sekars/workspace/VodQaAdvancedAppium/VodQA.apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
 
     private  void iosCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.2");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 7");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12.2");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone Xs");
         //sometimes environment has performance problems
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/WordPress.app");
-        driver = new IOSDriver<>(service.getUrl(), capabilities);
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/vodqa.zip");
+        driver = new IOSDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         System.out.println("test");
     }
 

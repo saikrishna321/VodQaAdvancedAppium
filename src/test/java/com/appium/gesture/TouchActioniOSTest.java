@@ -1,5 +1,6 @@
 package com.appium.gesture;
 
+import com.wordpress.utils.BaseTest;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.WebElement;
@@ -11,7 +12,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TouchActioniOSTest extends BaseUserTest {
+public class TouchActioniOSTest extends BaseTest {
 
     @Test
     public void doubleTap() throws InterruptedException {

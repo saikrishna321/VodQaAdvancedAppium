@@ -27,7 +27,7 @@ public class GestureTest extends BaseTest {
     @Test
     public void horizontalSwipingTest() throws Exception {
         login();
-        driver.findElementByAccessibilityId("slider1").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("slider1"))).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("slider")));
         MobileElement slider = driver.findElementByAccessibilityId("slider");
 
@@ -50,8 +50,7 @@ public class GestureTest extends BaseTest {
     @Test
     public void verticalSwipeTest() throws InterruptedException {
         login();
-        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("verticalSwipe")));
-        driver.findElementByAccessibilityId("verticalSwipe").click();
+        wait.until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("verticalSwipe"))).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("listview")));
         verticalSwipe("listview");
     }
