@@ -1,5 +1,6 @@
 package com.appium.gesture;
 
+import com.wordpress.utils.BaseTest;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
@@ -7,7 +8,7 @@ import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.clipboard.HasClipboard;
 import org.testng.annotations.Test;
 
-public class ClipboardTest extends BaseUserTest {
+public class ClipboardTest extends BaseTest {
 
     @Test
     public void sendSMSandClipBoard() throws InterruptedException {

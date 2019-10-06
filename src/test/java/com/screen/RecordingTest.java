@@ -1,6 +1,7 @@
 package com.screen;
 
 import com.appium.gesture.BaseUserTest;
+import com.wordpress.utils.BaseTest;
 import io.appium.java_client.HasSettings;
 import io.appium.java_client.Setting;
 import io.appium.java_client.android.AndroidDriver;
@@ -17,20 +18,23 @@ import java.nio.file.Paths;
 import java.util.Base64;
 
 
-public class RecordingTest extends BaseUserTest{
+public class RecordingTest extends BaseTest {
 
     @Test
     public void iOSScreenRecordTest() throws IOException {
         ((IOSDriver)driver).startRecordingScreen();
         String s = ((IOSDriver) driver).stopRecordingScreen();
         byte[] decode = Base64.getDecoder().decode(s);
-        FileUtils.writeByteArrayToFile(new File(System.getProperty("user.dir")+"/sample.mp4"),
+        FileUtils.writeByteArrayToFile(new File(
+            System.getProperty("user.dir")
+                +"/sample.mp4"),
                 decode);
     }
 
     @Test
-    public void androidScreenRecordTest() throws IOException {
+    public void androidScreenRecordTest() throws IOException, InterruptedException {
         ((AndroidDriver)driver).startRecordingScreen();
+        Thread.sleep(10000);
         String s = ((AndroidDriver) driver).stopRecordingScreen();
         byte[] decode = Base64.getDecoder().decode(s);
         FileUtils.writeByteArrayToFile(new File(System.getProperty("user.dir")+"/sample.mp4"),

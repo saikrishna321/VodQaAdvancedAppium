@@ -1,13 +1,12 @@
 package com.appium.gesture;
 
-import com.wordpress.pages.LoginPage;
 import com.wordpress.utils.BaseTest;
-import io.appium.java_client.*;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.MultiTouchAction;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.interactions.Actions;
@@ -20,29 +19,40 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.Arrays;
 
 public class GestureTest extends BaseTest {
 
     @Test
-    public void horizontalSwipingTest() throws Exception {
+    public void horizontaalSwipingTest() throws Exception {
         login();
-        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("slider1"))).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("slider")));
-        MobileElement slider = driver.findElementByAccessibilityId("slider");
-
+        wait.until(ExpectedConditions
+            .presenceOfElementLocated(MobileBy
+                .AccessibilityId("slider1")));
+        driver.findElementByAccessibilityId("slider1").click();
+        wait.until(ExpectedConditions
+            .presenceOfElementLocated(MobileBy
+                .AccessibilityId("slider")));
+        MobileElement slider = driver
+            .findElementByAccessibilityId("slider");
         Point source = slider.getLocation();
-
-        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        PointerInput finger = new PointerInput(PointerInput
+            .Kind.TOUCH, "finger");
         Sequence dragNDrop = new Sequence(finger, 1);
-        dragNDrop.addAction(finger.createPointerMove(Duration.ofMillis(0),
-                PointerInput.Origin.viewport(), source.x, source.y));
-        dragNDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.MIDDLE.asArg()));
-        dragNDrop.addAction(new Pause(finger, Duration.ofMillis(600)));
-        dragNDrop.addAction(finger.createPointerMove(Duration.ofMillis(600),
-                PointerInput.Origin.viewport(),
-                source.x + 400, source.y));
-        dragNDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
+        dragNDrop.addAction(finger.createPointerMove(Duration
+                .ofMillis(0),
+            PointerInput.Origin.viewport(),
+            source.x, source.y));
+        dragNDrop.addAction(finger.createPointerDown(PointerInput
+            .MouseButton.MIDDLE.asArg()));
+        dragNDrop.addAction(new Pause(finger,
+            Duration.ofMillis(600)));
+        dragNDrop.addAction(finger.createPointerMove(Duration
+                .ofMillis(600),
+            PointerInput.Origin.viewport(),
+            source.x + 400, source.y));
+        dragNDrop.addAction(finger.createPointerUp(PointerInput
+            .MouseButton.MIDDLE.asArg()));
         driver.perform(Arrays.asList(dragNDrop));
     }
 
@@ -185,19 +195,5 @@ public class GestureTest extends BaseTest {
                         .moveTo(ElementOption.element(slider1, sizeSlider1.width / 2, sizeSlider1.height / 2));
         new MultiTouchAction(driver).add(touchAction1).add(touchAction2).perform();
         Thread.sleep(2000);
-    }
-
-    @Test
-    public void dataMatcher() throws InterruptedException {
-//        login();
-//        wait.until(ExpectedConditions.
-//            elementToBeClickable(MobileBy.AccessibilityId("slider1")));
-        JSONObject orderJSON = new JSONObject();
-        JSONArray objects = new JSONArray();
-        objects.put("title");
-        objects.put("TextClock");
-        orderJSON.put("name", "hasEntry");
-        orderJSON.put("args", objects);
-        ((AndroidDriver) driver).findElementByAndroidDataMatcher(orderJSON.toString()).click();
     }
 }
