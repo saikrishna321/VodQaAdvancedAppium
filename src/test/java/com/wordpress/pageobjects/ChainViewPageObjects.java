@@ -12,7 +12,7 @@ import static io.appium.java_client.pagefactory.LocatorGroupStrategy.ALL_POSSIBL
  * Created by saikrisv on 12/29/16.
  */
 @PageObject
-public class ChainViewPageObjects {
+public class   ChainViewPageObjects {
 
     @AndroidFindBy(className = "android.widget.ScrollView")
     @AndroidFindBy(accessibility = "container2")

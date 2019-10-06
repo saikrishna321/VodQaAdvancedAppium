@@ -30,13 +30,15 @@ public class BaseTest {
 
     @BeforeClass
     public void beforeClass() throws Exception {
-        service = AppiumDriverLocalService.buildDefaultService();
+/*        service = AppiumDriverLocalService.buildDefaultService();
         service.start();
 
         if (service == null || !service.isRunning()) {
             throw new RuntimeException("An appium server node is not started!");
         }
         iosCaps();
+        }*/
+        androidCaps();
     }
 
     @AfterClass
@@ -44,18 +46,20 @@ public class BaseTest {
         if (driver != null) {
             driver.quit();
         }
-        if (service != null) {
+/*        if (service != null) {
             service.stop();
-        }
+        }*/
     }
 
     private void androidCaps() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 900000);
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,AutomationName.ESPRESSO);
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,AutomationName.ANDROID_UIAUTOMATOR2);
         //capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, ".ui.accounts.SignInActivity");
         capabilities.setCapability(MobileCapabilityType.APP, "/Users/sekars/workspace/VodQaAdvancedAppium/VodQA.apk");
+        //capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/java-client/src/test/java/io/appium/java_client/ApiDemos-debug.apk");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQA.apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
 
@@ -64,12 +68,15 @@ public class BaseTest {
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12.2");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone Xs");
+//        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11.4");
+       capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6");
+
         //sometimes environment has performance problems
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
+        capabilities.setCapability(MobileCapabilityType.UDID, "A4DCE564-192F-4941-9C9D-1DA55A78XXXX");
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
         capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/vodqa.zip");
         driver = new IOSDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-        System.out.println("test");
     }
 
     public void login() {

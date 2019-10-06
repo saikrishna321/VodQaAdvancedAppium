@@ -16,13 +16,13 @@ public class ClipboardTest extends BaseTest {
         Thread.sleep(5000);
         ((AndroidDriver<MobileElement>) driver).openNotifications();
         Thread.sleep(5000);
-        String textFromSMS = driver.findElementById("android:id/big_text").getText();
+        String textFromSMS = driver.findElementById("android:id/message_text").getText();
         ((HasClipboard) driver).setClipboardText(textFromSMS);
         String clipboardText = ((HasClipboard) driver).getClipboardText();
         ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.BACK));
         driver.findElementByAccessibilityId("username").clear();
 
-        //driver.findElementByAccessibilityId("username").setValue(clipboardText);
+        driver.findElementByAccessibilityId("username").sendKeys(clipboardText);
         Thread.sleep(5000);
     }
 }
