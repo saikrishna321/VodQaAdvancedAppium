@@ -43,4 +43,7 @@ public class BeanPageObjects {
         return new LoginPage();
     }
 
+    @Bean
+    public Helpers helpers() { return new Helpers(); }
+
 }

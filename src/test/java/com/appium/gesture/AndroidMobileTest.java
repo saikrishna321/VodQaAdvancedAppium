@@ -1,11 +1,12 @@
 package com.appium.gesture;
 
+import com.wordpress.utils.BaseTest;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AndroidMobileTest extends BaseUserTest {
+public class AndroidMobileTest extends BaseTest {
 
     @Test
     public void mobileShellWifiTest() {

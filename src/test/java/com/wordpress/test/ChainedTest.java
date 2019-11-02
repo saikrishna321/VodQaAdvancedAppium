@@ -30,7 +30,6 @@ public class ChainedTest extends BaseUserTest {
         String secondComment = loginPage
                 .enterUserNamePassword("admin", "admin").signIn().
                         navigateToChainedView().getSecondComment();
-
         Assert.assertEquals("Hello World, I'm View two", secondComment.trim());
     }
 
