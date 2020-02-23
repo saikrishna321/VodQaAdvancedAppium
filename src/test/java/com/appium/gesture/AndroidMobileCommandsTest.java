@@ -3,6 +3,7 @@ package com.appium.gesture;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.Before;
@@ -30,9 +31,10 @@ public class AndroidMobileCommandsTest {
     public void setUp() throws IOException {
         args = new HashMap<>();
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.ESPRESSO);
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.ANDROID_UIAUTOMATOR2);
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
-        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/ApiDemos-debug.apk");
+        capabilities.setCapability("adbExecTimeout", "70000");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/ApiDemos.apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         wait  = new WebDriverWait(driver, 20);
     }

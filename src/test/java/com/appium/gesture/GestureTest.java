@@ -36,6 +36,7 @@ public class GestureTest extends BaseTest {
                 .AccessibilityId("slider")));
         MobileElement slider = driver
             .findElementByAccessibilityId("slider");
+
         Point source = slider.getLocation();
         PointerInput finger = new PointerInput(PointerInput
             .Kind.TOUCH, "finger");

@@ -67,6 +67,12 @@ public class IOSMobileCommandsTest {
         wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("My Shortcuts"))).click();
         WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("PicSearch, “Show Picture”")));
         assertNotNull(element.getText());
+        args.clear();
+        args.put("bundleId", BUNDLE_ID);
+        driver.executeScript("mobile: launchApp", args);
+        wait.until(ExpectedConditions.presenceOfElementLocated(button)).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(button)).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(button)).click();
     }
 
     @Test
