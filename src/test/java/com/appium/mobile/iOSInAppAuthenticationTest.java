@@ -6,6 +6,9 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.serverevents.CustomEvent;
+import io.appium.java_client.serverevents.ServerEvents;
+import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,6 +17,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -28,24 +32,28 @@ public class iOSInAppAuthenticationTest {
     @BeforeClass
     public void setUp() throws IOException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "13.3");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 11 Pro Max");
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-//        capabilities.setCapability(IOSMobileCapabilityType.BUNDLE_ID, "com.zaimramlan.BiometricLogin");
         capabilities.setCapability(IOSMobileCapabilityType.USE_PREBUILT_WDA, true);
-        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/BiometricLogin.app");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/BiometricLogin.app");
         driver = new IOSDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         wait  = new WebDriverWait(driver, 20);
     }
 
     @Test
     public void inAppAuthenticationTest() {
-        driver.executeScript("mobile:enrollBiometric", ImmutableMap.of("isEnabled", true));
-        wait.until(ExpectedConditions.presenceOfElementLocated(loginButton)).click();
+        CustomEvent logEvent = new CustomEvent();
 
+        driver.executeScript("mobile:enrollBiometric", ImmutableMap.of("isEnabled", true));
+        logEvent.setVendor("VodQA");
+        logEvent.setEventName("onLoginScreen");
+        driver.logEvent(logEvent);
+        wait.until(ExpectedConditions.presenceOfElementLocated(loginButton)).click();
+        logEvent.setEventName("loggedIn");
         driver.switchTo().alert().accept();
+        driver.logEvent(logEvent);
 
         driver.executeScript("mobile:sendBiometricMatch", ImmutableMap.of("type", "faceId", "match", true));
 
@@ -55,12 +63,18 @@ public class iOSInAppAuthenticationTest {
         driver.executeScript("mobile:sendBiometricMatch", ImmutableMap.of("type", "faceId", "match", false));
 
         wait.until(ExpectedConditions.alertIsPresent());
-        driver.switchTo().alert().dismiss();
     }
 
+    @SneakyThrows
     @AfterClass
     public void afterClass() {
         if (driver != null) {
+            CustomEvent customEvent = new CustomEvent();
+            customEvent.setVendor("VodQA");
+            customEvent.setEventName("event ends here");
+            driver.logEvent(customEvent);
+            ServerEvents events = driver.getEvents();
+            events.save(new File(System.getProperty("user.dir") + "/eventFlow.json").toPath());
             driver.quit();
         }
     }
