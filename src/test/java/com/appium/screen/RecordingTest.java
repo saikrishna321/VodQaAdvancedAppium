@@ -1,6 +1,5 @@
-package com.screen;
+package com.appium.screen;
 
-import com.appium.gesture.BaseUserTest;
 import com.wordpress.utils.BaseTest;
 import io.appium.java_client.HasSettings;
 import io.appium.java_client.Setting;

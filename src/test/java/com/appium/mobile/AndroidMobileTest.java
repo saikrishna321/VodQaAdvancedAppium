@@ -1,4 +1,4 @@
-package com.appium.gesture;
+package com.appium.mobile;
 
 import com.wordpress.utils.BaseTest;
 import org.testng.annotations.Test;

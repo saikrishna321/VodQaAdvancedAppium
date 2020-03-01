@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TouchActioniOSTest extends BaseTest {
+public class TouchActionsTest extends BaseTest {
 
     @Test
     public void doubleTap() throws InterruptedException {

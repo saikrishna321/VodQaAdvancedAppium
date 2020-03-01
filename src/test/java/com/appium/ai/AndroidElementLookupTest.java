@@ -1,4 +1,4 @@
-package com.appium.gesture;
+package com.appium.ai;
 
 import com.wordpress.utils.BaseTest;
 import io.appium.java_client.MobileBy;

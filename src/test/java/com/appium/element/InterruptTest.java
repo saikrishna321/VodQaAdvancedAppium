@@ -1,4 +1,4 @@
-package com.appium.gesture;
+package com.appium.element;
 
 import com.wordpress.utils.BaseTest;
 import io.appium.java_client.MobileBy;
@@ -17,7 +17,7 @@ public class InterruptTest extends BaseTest {
 
     @Test
     public void simulateSMSAndSlideTest() {
-        loginToApplication();
+        login();
         ((AndroidDriver)driver).sendSMS("555-555-5555",
                 "Your code is 654321");
         wait.until(ExpectedConditions.presenceOfElementLocated(

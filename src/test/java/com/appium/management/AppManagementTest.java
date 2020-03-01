@@ -1,4 +1,4 @@
-package com.management;
+package com.appium.management;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;

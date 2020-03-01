@@ -1,4 +1,4 @@
-package com.appium.gesture;
+package com.appium.element;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -13,16 +13,16 @@ import org.testng.annotations.Test;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DatMatcherTest {
+public class AndroidDataMatcherTest {
 
     @Test
-    public void dataMatcnher() throws  MalformedURLException {
+    public void dataMatcherTest() throws  MalformedURLException {
         AppiumDriver driver;
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 900000);
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.ESPRESSO);
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/java-client/src/test/java/io/appium/java_client/ApiDemos-debug.apk");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/ApiDemos-debug.apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.findElementByAccessibilityId("Views").click();
 
@@ -37,13 +37,13 @@ public class DatMatcherTest {
 
 
     @Test
-    public void dataMatcher1() throws  MalformedURLException {
+    public void dataMatcher1Test() throws  MalformedURLException {
         AppiumDriver driver;
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 900000);
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.ESPRESSO);
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/android-testing/ui/espresso/DataAdapterSample/app/build/outputs/apk/debug/app-debug.apk");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/app-debug.apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         JSONObject orderJSON = new JSONObject();
         JSONArray objects = new JSONArray();

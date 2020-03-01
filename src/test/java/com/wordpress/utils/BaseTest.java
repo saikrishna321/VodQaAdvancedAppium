@@ -5,7 +5,6 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -30,15 +29,13 @@ public class BaseTest {
 
     @BeforeClass
     public void beforeClass() throws Exception {
-/*        service = AppiumDriverLocalService.buildDefaultService();
+        service = AppiumDriverLocalService.buildDefaultService();
         service.start();
 
         if (service == null || !service.isRunning()) {
             throw new RuntimeException("An appium server node is not started!");
         }
         iosCaps();
-        }*/
-        androidCaps();
     }
 
     @AfterClass
@@ -46,9 +43,9 @@ public class BaseTest {
         if (driver != null) {
             driver.quit();
         }
-/*        if (service != null) {
+        if (service != null) {
             service.stop();
-        }*/
+        }
     }
 
     private void androidCaps() throws MalformedURLException {
@@ -56,9 +53,6 @@ public class BaseTest {
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 900000);
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,AutomationName.ANDROID_UIAUTOMATOR2);
-        //capabilities.setCapability(AndroidMobileCapabilityType.APP_WAIT_ACTIVITY, ".ui.accounts.SignInActivity");
-        capabilities.setCapability(MobileCapabilityType.APP, "/Users/sekars/workspace/VodQaAdvancedAppium/VodQA.apk");
-        //capabilities.setCapability(MobileCapabilityType.APP, "/Users/saikrisv/git/java-client/src/test/java/io/appium/java_client/ApiDemos-debug.apk");
         capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQA.apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }

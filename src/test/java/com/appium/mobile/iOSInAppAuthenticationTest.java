@@ -1,4 +1,4 @@
-package com.appium.gesture;
+package com.appium.mobile;
 
 import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.MobileBy;
