@@ -9,19 +9,19 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Pause;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
+
+import static org.testng.Assert.assertEquals;
 
 public class GestureTest extends BaseTest {
 
@@ -29,34 +29,34 @@ public class GestureTest extends BaseTest {
     public void horizontaalSwipingTest() throws Exception {
         login();
         wait.until(ExpectedConditions
-            .presenceOfElementLocated(MobileBy
-                .AccessibilityId("slider1")));
+                .presenceOfElementLocated(MobileBy
+                        .AccessibilityId("slider1")));
         driver.findElementByAccessibilityId("slider1").click();
         wait.until(ExpectedConditions
-            .presenceOfElementLocated(MobileBy
-                .AccessibilityId("slider")));
+                .presenceOfElementLocated(MobileBy
+                        .AccessibilityId("slider")));
         MobileElement slider = driver
-            .findElementByAccessibilityId("slider");
+                .findElementByAccessibilityId("slider");
 
         Point source = slider.getLocation();
         PointerInput finger = new PointerInput(PointerInput
-            .Kind.TOUCH, "finger");
+                .Kind.TOUCH, "finger");
         Sequence dragNDrop = new Sequence(finger, 1);
         dragNDrop.addAction(finger.createPointerMove(Duration
-                .ofMillis(0),
-            PointerInput.Origin.viewport(),
-            source.x, source.y));
+                        .ofMillis(0),
+                PointerInput.Origin.viewport(),
+                source.x, source.y));
         dragNDrop.addAction(finger.createPointerDown(PointerInput
-            .MouseButton.MIDDLE.asArg()));
+                .MouseButton.MIDDLE.asArg()));
         dragNDrop.addAction(new Pause(finger,
-            Duration.ofMillis(600)));
+                Duration.ofMillis(600)));
         dragNDrop.addAction(finger.createPointerMove(Duration
-                .ofMillis(600),
-            PointerInput.Origin.viewport(),
-            source.x + 400, source.y));
+                        .ofMillis(600),
+                PointerInput.Origin.viewport(),
+                source.x + 400, source.y));
         dragNDrop.addAction(finger.createPointerUp(PointerInput
-            .MouseButton.MIDDLE.asArg()));
-        driver.perform(Arrays.asList(dragNDrop));
+                .MouseButton.MIDDLE.asArg()));
+        driver.perform(Collections.singletonList(dragNDrop));
     }
 
 
@@ -87,8 +87,8 @@ public class GestureTest extends BaseTest {
                 PointerInput.Origin.viewport(),
                 target.x, target.y));
         dragNDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
-        driver.perform(Arrays.asList(dragNDrop));
-        Assert.assertTrue(driver.findElementsByAccessibilityId("Circle dropped").size() == 1);
+        driver.perform(Collections.singletonList(dragNDrop));
+        assertEquals(driver.findElementsByAccessibilityId("success").size(), 1);
     }
 
     @Test
@@ -122,7 +122,7 @@ public class GestureTest extends BaseTest {
                 PointerInput.Origin.viewport(), source.x * 3 / 4, source.y * 3 / 4));
         pinchAndZoom2.addAction(finger2.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
-        driver.perform(Arrays.asList(pinchAndZoom1,pinchAndZoom2));
+        driver.perform(Arrays.asList(pinchAndZoom1, pinchAndZoom2));
     }
 
     @Test
@@ -146,7 +146,7 @@ public class GestureTest extends BaseTest {
                 until(ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("doubleTapMe")));
         Thread.sleep(1000);
         Point source = element.getCenter();
-        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH,"finger1");
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger1");
         Sequence tap = new Sequence(finger, 1);
         tap.addAction(finger.createPointerMove(Duration.ofMillis(0),
                 PointerInput.Origin.viewport(), source.x, source.y));

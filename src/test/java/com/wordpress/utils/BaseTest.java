@@ -35,7 +35,7 @@ public class BaseTest {
         if (service == null || !service.isRunning()) {
             throw new RuntimeException("An appium server node is not started!");
         }
-        iosCaps();
+        androidCaps();
     }
 
     @AfterClass
@@ -53,7 +53,7 @@ public class BaseTest {
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 900000);
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,AutomationName.ANDROID_UIAUTOMATOR2);
-        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/VodQA.apk");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/VodQA.apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
 
