@@ -22,6 +22,7 @@ public class TouchActionsTest extends BaseTest {
         Thread.sleep(1000);
         Map<String, Object> args = new HashMap<>();
         args.put("element", element.getId());
+        driver.executeScript("mobile: doubleTap", args);
     }
 
 
@@ -39,7 +40,7 @@ public class TouchActionsTest extends BaseTest {
     }
 
     @Test
-    public void verticalSwipeTest() {
+    public void verticalSwipeTest() throws InterruptedException {
         login();
         wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("verticalSwipe")));
         driver.findElementByAccessibilityId("verticalSwipe").click();

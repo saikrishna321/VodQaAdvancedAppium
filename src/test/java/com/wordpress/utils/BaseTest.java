@@ -52,6 +52,7 @@ public class BaseTest {
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,AutomationName.ANDROID_UIAUTOMATOR2);
         capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/VodQA.apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        wait = new WebDriverWait(driver, 30);
     }
 
     private  void iosCaps() throws MalformedURLException {
@@ -65,7 +66,7 @@ public class BaseTest {
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
 //        capabilities.setCapability(MobileCapabilityType.UDID, "A4DCE564-192F-4941-9C9D-1DA55A78XXXX");
         capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 700000);
-        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/vodqa.zip");
+        capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/apps/vodqa.zip");
         driver = new IOSDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         wait = new WebDriverWait(driver, 30);
     }

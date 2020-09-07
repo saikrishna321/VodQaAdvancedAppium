@@ -149,7 +149,6 @@ public class GestureTest extends BaseTest {
     }
 
     private void verticalSwipe(String locator) throws InterruptedException {
-        Thread.sleep(5000);
         MobileElement slider = driver.findElementByAccessibilityId(locator);
         Point source = slider.getCenter();
         PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
