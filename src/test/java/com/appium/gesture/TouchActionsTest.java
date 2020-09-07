@@ -3,8 +3,6 @@ package com.appium.gesture;
 import com.wordpress.utils.BaseTest;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
@@ -41,7 +39,7 @@ public class TouchActionsTest extends BaseTest {
     }
 
     @Test
-    public void verticalSwipeTest() throws InterruptedException {
+    public void verticalSwipeTest() {
         login();
         wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("verticalSwipe")));
         driver.findElementByAccessibilityId("verticalSwipe").click();
