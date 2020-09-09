@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="2" verbose="2" name="TestNG Forum" parallel="tests" data-provider-thread-count="2">
-  <test name="TestNG Test0" preserve-order="false">
+<suite thread-count="2" verbose="2" name="Appium parallel test execution" parallel="tests">
+  <test name="Emulator 1">
     <parameter name="device" value="emulator-5554"/>
+    <parameter name="platform" value="android"/>
     <classes>
       <class name="com.appium.gesture.GestureTest">
       </class>
     </classes>
   </test>
-  <test name="TestNG Test1" preserve-order="false">
-    <parameter name="device" value="5a4b1031"/>
+  <test name="Emulator 2">
+    <parameter name="device" value="87206E9F-EACA-4D68-9231-014533472457"/>
+    <parameter name="platform" value="ios"/>
     <classes>
       <class name="com.appium.gesture.GestureTest">
       </class>

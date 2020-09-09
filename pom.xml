@@ -59,7 +59,7 @@
         <dependency>
             <groupId>com.github.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>7.3.0</version>
+            <version>c8cee6ec6f</version>
         </dependency>
     </dependencies>
 
