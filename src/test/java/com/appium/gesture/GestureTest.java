@@ -1,5 +1,6 @@
 package com.appium.gesture;
 
+import com.google.common.collect.ImmutableMap;
 import com.wordpress.utils.BaseTest;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
@@ -13,6 +14,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Pause;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.remote.http.HttpMethod;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
@@ -45,6 +47,19 @@ public class GestureTest extends BaseTest {
                 PointerInput.Origin.viewport(), source.x + 400, source.y));
         sequence.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
         driver.perform(singletonList(sequence));
+    }
+
+    @Test
+    public void horizontalSwipingWithGesturesPluginTest() {
+        login();
+        wait.until(presenceOfElementLocated(MobileBy.AccessibilityId("slider1")));
+        driver.findElementByAccessibilityId("slider1").click();
+        wait.until(presenceOfElementLocated(MobileBy.AccessibilityId("slider")));
+        MobileElement slider = driver.findElementByAccessibilityId("slider");
+
+        driver.addCommand(HttpMethod.POST, String.format("/session/%s/plugin/actions/swipe", driver.getSessionId()), "swipe");
+        driver.execute("swipe", ImmutableMap.of("elementId", slider.getId(), "percentage", 50));
+
     }
 
 
