@@ -1,7 +1,7 @@
 package com.appium.element;
 
 import com.wordpress.utils.BaseTest;
-import io.appium.java_client.MobileElement;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
@@ -14,15 +14,15 @@ public class ClipboardTest extends BaseTest {
     public void sendSMSandClipBoard() throws InterruptedException {
         ((AndroidDriver) driver).sendSMS("555-555-5555", "Your message here!");
         Thread.sleep(5000);
-        ((AndroidDriver<MobileElement>) driver).openNotifications();
+        ((AndroidDriver) driver).openNotifications();
         Thread.sleep(5000);
-        String textFromSMS = driver.findElementById("android:id/message_text").getText();
+        String textFromSMS = driver.findElement(AppiumBy.id("android:id/message_text")).getText();
         ((HasClipboard) driver).setClipboardText(textFromSMS);
         String clipboardText = ((HasClipboard) driver).getClipboardText();
         ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.BACK));
-        driver.findElementByAccessibilityId("username").clear();
+        driver.findElement(AppiumBy.accessibilityId("username")).clear();
 
-        driver.findElementByAccessibilityId("username").sendKeys(clipboardText);
+        driver.findElement(AppiumBy.accessibilityId("username")).sendKeys(clipboardText);
         Thread.sleep(5000);
     }
 }

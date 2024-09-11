@@ -1,10 +1,10 @@
 package com.appium.element;
 
 import com.wordpress.utils.BaseTest;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Pause;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
@@ -21,12 +21,12 @@ public class InterruptTest extends BaseTest {
         ((AndroidDriver)driver).sendSMS("555-555-5555",
                 "Your code is 654321");
         wait.until(ExpectedConditions.presenceOfElementLocated(
-                MobileBy.AccessibilityId("slider1"))).click();
+                AppiumBy.accessibilityId("slider1"))).click();
         slideUsingSlider();
     }
 
     public void slideUsingSlider() {
-        MobileElement slider = (MobileElement) wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("slider")));
+        WebElement slider = (WebElement) wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.accessibilityId("slider")));
 
         Point source = slider.getLocation();
 
