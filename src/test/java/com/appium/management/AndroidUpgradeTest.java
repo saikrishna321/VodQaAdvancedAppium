@@ -1,6 +1,6 @@
 package com.appium.management;
 
-import io.appium.java_client.MobileBy;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 
 public class AndroidUpgradeTest {
     private String APP_PKG = "io.cloudgrey.the_app";
@@ -24,10 +25,10 @@ public class AndroidUpgradeTest {
 
     private String TEST_MESSAGE = "Hello World";
 
-    private By msgInput = MobileBy.AccessibilityId("messageInput");
-    private By savedMsg = MobileBy.AccessibilityId(TEST_MESSAGE);
-    private By saveMsgBtn = MobileBy.AccessibilityId("messageSaveBtn");
-    private By echoBox = MobileBy.AccessibilityId("Echo Box");
+    private By msgInput = AppiumBy.accessibilityId("messageInput");
+    private By savedMsg = AppiumBy.accessibilityId(TEST_MESSAGE);
+    private By saveMsgBtn = AppiumBy.accessibilityId("messageSaveBtn");
+    private By echoBox = AppiumBy.accessibilityId("Echo Box");
 
     @Test
     public void testSavedTextAfterUpgrade () throws IOException {
@@ -45,7 +46,7 @@ public class AndroidUpgradeTest {
         // Open the app.
         AndroidDriver driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         try {
             wait.until(ExpectedConditions.presenceOfElementLocated(echoBox)).click();
@@ -56,7 +57,7 @@ public class AndroidUpgradeTest {
 
             driver.installApp(appUpgradeVersion);
             Activity activity = new Activity(APP_PKG, APP_ACT);
-            driver.startActivity(activity);
+            driver.startActivity(APP_PKG, APP_ACT);
 
             wait.until(ExpectedConditions.presenceOfElementLocated(echoBox)).click();
             savedText = wait.until(ExpectedConditions.presenceOfElementLocated(savedMsg)).getText();

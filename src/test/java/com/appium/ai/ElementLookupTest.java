@@ -1,12 +1,10 @@
 package com.appium.ai;
 
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.Setting;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.remote.AutomationName;
-import io.appium.java_client.remote.IOSMobileCapabilityType;
-import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.junit.After;
@@ -22,6 +20,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.HashMap;
 
 public class ElementLookupTest {
@@ -40,33 +39,33 @@ public class ElementLookupTest {
         if (service == null || !service.isRunning()) {
             throw new RuntimeException("An appium server node is not started!");
         }
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("platformName", "iOS");
-        caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12.2");
-        caps.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone X");
-        caps.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
-//        caps.setCapability(IOSMobileCapabilityType.USE_PREBUILT_WDA, true);
-//        caps.setCapability("bundleId", "com.apple.mobileslideshow");
-        caps.setCapability("bundleId", "com.gbaldera.ShoppingCartExample");
+        XCUITestOptions options = new XCUITestOptions();
+        options.setPlatformName("iOS");
+        options.setPlatformVersion("12.2");
+        options.setDeviceName("iPhone X");
+        options.setAutomationName(AutomationName.IOS_XCUI_TEST);
+        options.setApp(System.getProperty("user.dir") + "/apps/vodqa.zip");
+        options.setBundleId("com.gbaldera.ShoppingCartExample");
+        options.setUseJSONSource(true);
+        driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), options);
 
-        HashMap<String, String> customFindModules = new HashMap<>();
-        customFindModules.put("ai", "test-ai-classifier");
+//         HashMap<String, String> customFindModules = new HashMap<>();
+//         customFindModules.put("ai", "test-ai-classifier");
 
-        caps.setCapability("customFindModules", customFindModules);
-//        caps.setCapability("testaiObjectDetectionThreshold", "0.6");
-        caps.setCapability("shouldUseCompactResponses", false);
+//         caps.setCapability("customFindModules", customFindModules);
+// //        caps.setCapability("testaiObjectDetectionThreshold", "0.6");
+//         caps.setCapability("shouldUseCompactResponses", false);
 
-        driver = new IOSDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), caps);
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     @Test
     public void testFindElementUsingAI() {
 //        driver.setSetting(Setting.CHECK_IMAGE_ELEMENT_STALENESS, false);
-        driver.findElement(MobileBy.custom("ai:cart")).click();
+        driver.findElement(AppiumBy.custom("ai:cart")).click();
 
         wait.until(ExpectedConditions.presenceOfElementLocated(
-                MobileBy.AccessibilityId("Browse"))).click();
+                AppiumBy.accessibilityId("Browse"))).click();
     }
 
     @AfterClass

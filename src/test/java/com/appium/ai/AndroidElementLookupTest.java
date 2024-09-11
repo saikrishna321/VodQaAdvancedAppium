@@ -1,15 +1,18 @@
 package com.appium.ai;
 
 import com.wordpress.utils.BaseTest;
-import io.appium.java_client.MobileBy;
+
+import io.appium.java_client.AppiumBy;
+
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class AndroidElementLookupTest extends BaseTest {
 
-    private By cartCount = MobileBy.id("count_number");
-    private By cart = MobileBy.custom("ai:cart");
+    private By cartCount = AppiumBy.id("count_number");
+    private By cart = AppiumBy.custom("ai:cart");
+    
     @Test
     public void elementLookupTest() {
         String prevCount = driver.findElement(cartCount).getText();

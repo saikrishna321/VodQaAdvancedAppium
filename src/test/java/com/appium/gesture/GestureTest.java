@@ -3,10 +3,6 @@ package com.appium.gesture;
 import com.google.common.collect.ImmutableMap;
 import com.wordpress.utils.BaseTest;
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.MultiTouchAction;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.ElementOption;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
@@ -22,7 +18,6 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 
 import static java.time.Duration.ofMillis;
-import static java.time.Duration.ofSeconds;
 import static java.util.Arrays.asList;
 import static java.util.Collections.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;

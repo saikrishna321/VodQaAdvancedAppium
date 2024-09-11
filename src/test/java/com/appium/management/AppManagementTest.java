@@ -1,6 +1,6 @@
 package com.appium.management;
 
-import io.appium.java_client.MobileBy;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 
 public class AppManagementTest {
 
@@ -21,9 +22,9 @@ public class AppManagementTest {
     private String APP_V1_0_2 = "https://github.com/cloudgrey-io/the-app/releases/download/v1.0.2/TheApp-v1.0.2.app.zip";
 
     private By msgInput = By.xpath("//XCUIElementTypeTextField[@name=\"messageInput\"]");
-    private By savedMsg = MobileBy.AccessibilityId("savedMessage");
-    private By saveMsgBtn = MobileBy.AccessibilityId("messageSaveBtn");
-    private By echoBox = MobileBy.AccessibilityId("Echo Box");
+    private By savedMsg = AppiumBy.accessibilityId("savedMessage");
+    private By saveMsgBtn = AppiumBy.accessibilityId("messageSaveBtn");
+    private By echoBox = AppiumBy.accessibilityId("Echo Box");
 
     private String TEST_MESSAGE = "Hello World";
 
@@ -40,9 +41,9 @@ public class AppManagementTest {
         String appUpgradeVersion = APP_V1_0_2;
 
         // Open the app.
-        IOSDriver driver = new IOSDriver<>(new URL("http://localhost:4723/wd/hub"), capabilities);
+        IOSDriver driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         try {
             wait.until(ExpectedConditions.presenceOfElementLocated(echoBox)).click();

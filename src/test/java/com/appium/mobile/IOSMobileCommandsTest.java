@@ -1,15 +1,14 @@
 package com.appium.mobile;
 
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileElement;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.remote.IOSMobileCapabilityType;
+import io.appium.java_client.ios.options.XCUITestOptions;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -17,6 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.HashMap;
 
@@ -30,23 +30,23 @@ public class IOSMobileCommandsTest {
     private String SETTINGS_BUNDLE_ID = "com.apple.Preferences";
     private String BUNDLE_ID = "com.rarcher.PicSearch";
 
-    private By button = MobileBy.iOSNsPredicateString("name MATCHES 'Show Picture'");
-    private By image = MobileBy.className("XCUIElementTypeImage");
+    private By button = AppiumBy.iOSNsPredicateString("name MATCHES 'Show Picture'");
+    private By image = AppiumBy.className("XCUIElementTypeImage");
     private File traceZip = new File(System.getProperty("user.dir") + "/trace.zip");
 
     @Before
     public void setUp() throws IOException {
         args = new HashMap<>();
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("platformName", "iOS");
-        caps.setCapability("platformVersion", "12.2");
-        caps.setCapability("deviceName", "iPhone Xs");
-        caps.setCapability("noReset", true);
-        caps.setCapability(IOSMobileCapabilityType.BUNDLE_ID, BUNDLE_ID);
-        caps.setCapability(IOSMobileCapabilityType.USE_PREBUILT_WDA, true);
+        XCUITestOptions options = new XCUITestOptions();
+        options.setPlatformName("iOS");
+        options.setPlatformVersion("12.2");
+        options.setDeviceName("iPhone Xs");
+        options.setNoReset(true);
+        options.setBundleId(BUNDLE_ID);
+        options.setUsePrebuiltWda(true);
 
-        driver = new IOSDriver<MobileElement>(new URL("http://localhost:4723/wd/hub"), caps);
-        wait  = new WebDriverWait(driver, 20);
+        driver = new IOSDriver(new URL("http://localhost:4723/wd/hub"), options);
+        wait  = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     @Test
@@ -63,9 +63,9 @@ public class IOSMobileCommandsTest {
     public void switchToSettingsAppAndValidateShortcuts() {
         args.put("bundleId", SETTINGS_BUNDLE_ID);
         driver.executeScript("mobile: launchApp", args);
-        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("Siri"))).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("My Shortcuts"))).click();
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.AccessibilityId("PicSearch, “Show Picture”")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.accessibilityId("Siri"))).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.accessibilityId("My Shortcuts"))).click();
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.accessibilityId("PicSearch, “Show Picture”")));
         assertNotNull(element.getText());
         args.clear();
         args.put("bundleId", BUNDLE_ID);
