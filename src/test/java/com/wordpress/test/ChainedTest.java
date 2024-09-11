@@ -1,13 +1,9 @@
 package com.wordpress.test;
 
-import com.appium.gesture.BaseUserTest;
 import com.wordpress.pages.LoginPage;
-import com.wordpress.utils.BaseTest;
 import io.appium.java_client.AppiumDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
