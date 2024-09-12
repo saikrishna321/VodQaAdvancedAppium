@@ -31,7 +31,6 @@ public class GestureTest extends BaseTest {
         login();
         wait.until(presenceOfElementLocated(AppiumBy.accessibilityId("slider1")));
         driver.findElement(AppiumBy.accessibilityId("slider")).click();
-        driver.findElement(AppiumBy.accessibilityId("slider")).click();
         wait.until(presenceOfElementLocated(AppiumBy.accessibilityId("slider")));
         WebElement slider =driver.findElement(AppiumBy.accessibilityId("slider"));
 
@@ -51,13 +50,12 @@ public class GestureTest extends BaseTest {
     @Test
     public void horizontalSwipingWithGesturesPluginTest() {
         login();
-        wait.until(presenceOfElementLocated(AppiumBy.accessibilityId("slider1")));
-        driver.findElement(AppiumBy.accessibilityId("slider")).click();
+        wait.until(presenceOfElementLocated(AppiumBy.accessibilityId("slider1"))).click();
         wait.until(presenceOfElementLocated(AppiumBy.accessibilityId("slider")));
         RemoteWebElement slider = (RemoteWebElement) driver.findElement(AppiumBy.accessibilityId("slider"));
 
-        driver.addCommand(HttpMethod.POST, String.format("/session/%s/plugin/actions/swipe", driver.getSessionId()), "swipe");
-        driver.execute("swipe", ImmutableMap.of("elementId", slider.getId(), "percentage", 50));
+        //driver.addCommand(HttpMethod.POST, String.format("/session/%s/plugin/actions/swipe", driver.getSessionId()), "swipe");
+        driver.executeScript("gesture: swipe", ImmutableMap.of("elementId", slider.getId(), "percentage", 20, "direction", "right"));
 
     }
 

@@ -13,6 +13,8 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AndroidUpgradeTest {
     private String APP_PKG = "io.cloudgrey.the_app";
@@ -56,9 +58,10 @@ public class AndroidUpgradeTest {
             Assert.assertEquals(savedText, TEST_MESSAGE);
 
             driver.installApp(appUpgradeVersion);
-            Activity activity = new Activity(APP_PKG, APP_ACT);
-            driver.startActivity(APP_PKG, APP_ACT);
-
+            Map<String, Object> params = new HashMap<>();
+            params.put("appPackage", APP_PKG);
+            params.put("appActivity", APP_ACT);
+            driver.executeScript("mobile: startActivity", params);
             wait.until(ExpectedConditions.presenceOfElementLocated(echoBox)).click();
             savedText = wait.until(ExpectedConditions.presenceOfElementLocated(savedMsg)).getText();
             Assert.assertEquals(savedText, TEST_MESSAGE);
